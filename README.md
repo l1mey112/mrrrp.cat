@@ -8,3 +8,5 @@ put mp3s on ther
 and cat picture
 
 no asking for permission
+
+# webring support soon
