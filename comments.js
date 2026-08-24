@@ -1,41 +1,54 @@
 import fs from 'fs';
 
-// TODO: lol this should be a database
-const commentsFile = './mrrrp-comments.json';
+const commentsFile = '/tmp/mrrrp-comments.json';
 
-function readComments() {
+async function readComments(r) {
     try {
-        return JSON.parse(
-            fs.readFileSync(commentsFile, 'utf8')
-        );
-    } catch {
+        const contents = fs.readFile(commentsFile, 'utf8');
+
+        if (!contents.trim()) {
+            return [];
+        }
+
+        const comments = JSON.parse(contents);
+        return Array.isArray(comments) ? comments : [];
+    } catch (e) {
+        r.error(`readComments: ${e}`);
         return [];
     }
 }
 
-function writeComments(comments) {
-    fs.writeFileSync(
-        commentsFile,
-        JSON.stringify(comments, null, 2)
-    );
+async function writeComments(r, comments) {
+    try {
+        fs.writeFile(
+            commentsFile,
+            JSON.stringify(comments, null, 2),
+            'utf8'
+        );
+
+        return true;
+    } catch (e) {
+        r.error(`writeComments: ${e}`);
+        return false;
+    }
 }
 
-function comments(r) {
-    const savedComments = readComments();
+async function comments(r) {
+    if (r.method !== 'GET' && r.method !== 'POST') {
+        r.return(405, 'Method not allowed');
+        return;
+    }
 
     if (r.method === 'GET') {
+        const savedComments = await readComments(r);
+
         r.headersOut['Content-Type'] = 'application/json';
         r.return(200, JSON.stringify(savedComments));
         return;
     }
 
-    if (r.method !== 'POST') {
-        r.return(405, 'Method not allowed');
-        return;
-    }
-
     try {
-        const data = JSON.parse(r.requestBody || '{}');
+        const data = JSON.parse(r.requestText || '{}');
         const text = String(data.text || '').trim();
 
         if (!text || text.length > 500) {
@@ -43,22 +56,31 @@ function comments(r) {
             return;
         }
 
+        const savedComments = await readComments(r);
+
         const comment = {
             id: Date.now(),
-            text: text,
+            text,
             x: Number(data.x) || 0,
             y: Number(data.y) || 0,
             rotation: Number(data.rotation) || 0
         };
 
         savedComments.push(comment);
-        writeComments(savedComments);
+
+        const written = await writeComments(r, savedComments);
+
+        if (!written) {
+            r.return(500, 'Could not save comment');
+            return;
+        }
 
         r.headersOut['Content-Type'] = 'application/json';
         r.return(200, JSON.stringify(comment));
-    } catch {
+    } catch (e) {
+        r.error(`comments: ${e}`);
         r.return(400, 'Invalid request');
     }
 }
 
-export default { comments }
+export default { comments };
