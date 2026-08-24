@@ -1,5 +1,6 @@
 tmp
 repology-updater
+.DS_Store
 
 #public/*
 #!public/static
