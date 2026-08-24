@@ -1,0 +1,7 @@
+tmp
+
+#public/*
+#!public/static
+#!public/media
+#!public/talks
+#!public/robots.txt
