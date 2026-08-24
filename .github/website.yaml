@@ -4,10 +4,10 @@ metadata:
   name: deployment
   namespace: mrrrp-website
 spec:
-  replicas: 2
+  # only one!
+  replicas: 1
   strategy:
-    type: RollingUpdate
-    rollingUpdate: { maxUnavailable: 0, maxSurge: 1 }
+    type: Recreate
   selector:
     matchLabels:
       component: deployment
