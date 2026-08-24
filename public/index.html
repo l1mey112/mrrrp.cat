@@ -11,6 +11,15 @@
                 animation: r 1s linear infinite;
             }
 
+            body {
+                padding: 10px;
+                min-height: 100vh;
+                background: #111;
+                color: white;
+                <!-- justify-content: center; -->
+            }
+
+
             @keyframes r {
                 to {
                     background-position: 100%;
@@ -19,17 +28,6 @@
         </style>
         <style>
             /* mouse effect stuff */
-            body {
-                margin: 0;
-                min-height: 100vh;
-                background: #111;
-                color: white;
-                overflow: hidden;
-                cursor: crosshair;
-                justify-content: center; 
-                align-items: center;
-            }
-
             .star, .word {
                 position: fixed;
                 pointer-events: none;
@@ -306,13 +304,13 @@
         <h2><a href="mmrow.html">meow</a></h2>
         <h2><a href="https://maxbittker.github.io/warms/">warms (EXTERNAL SITE)</a></h2>
         <button id="spawn">spawn cat</button>
-        
+
         <tr>
             <th><img src="media/sara-cat-rofa-cat.gif"></th>
             <th><img src="media/sara-cat-rofa-cat.gif"></th>
             <th><img src="media/sara-cat-rofa-cat.gif"></th>
         </tr>
-        
+
         <script src="/main.js"></script>
     </body>
 </html>
