@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        img { cursor: pointer; max-width: 90%; }
+    </style>
+</head>
+<body>
+    <img id="img" src="media/jogn.jpeg">
+    <audio id="audio"></audio>
+
+    <script>
+        let meows = [];
+        for (let i = 0; i < 5; i++) {
+            meows.push(`media/meow${i}.mp3`);
+        }
+
+        document.getElementById('img').onclick = () => {
+            document.getElementById('audio').src = meows[Math.floor(Math.random() * meows.length)];
+            document.getElementById('audio').play();
+        };
+    </script>
+</body>
+</html>
