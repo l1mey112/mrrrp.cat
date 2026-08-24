@@ -1,6 +1,7 @@
 tmp
 repology-updater
 .DS_Store
+comments.json
 
 #public/*
 #!public/static
