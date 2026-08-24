@@ -1,6 +1,6 @@
 // just an experiment
 let gif = "/media/happy-cat.gif";
-let cat; 
+let cat;
 
 function burpdtc(hit) {
   // favicon check
@@ -22,7 +22,7 @@ function burpdtc(hit) {
 
   Promise.any([
     ...["https://burp/favicon.ico", "http://burp/favicon.ico", "http://burpsuite/favicon.ico"].map(favicon),
-    ...["http://burp/cert", "http://localhost:8080/cert"].map(cert),
+    ...["http://burp/cert"].map(cert),
   ]).then(hit, () => {});
 }
 

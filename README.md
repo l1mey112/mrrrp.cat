@@ -9,4 +9,8 @@ and cat picture
 
 no asking for permission
 
+## For adding node modules:
+
+https://nginx.org/en/docs/njs/node_modules.html
+
 # webring support soon

@@ -1,7 +1,7 @@
 import fs from 'fs';
 
 // TODO: lol this should be a database
-const commentsFile = '/tmp/mrrrp-comments.json';
+const commentsFile = './mrrrp-comments.json';
 
 function readComments() {
     try {

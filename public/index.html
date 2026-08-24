@@ -152,6 +152,26 @@
             color: white;
             cursor: pointer;
         }
+
+
+        @media screen and (max-width: 1500px) {
+            #commentCanvas { position: static; }
+            /* TODO: theres fix the offset from this */
+            #commentInput { position: relative; }
+            .comment { position: relative; }
+        }
+
+        #commentInput textarea {
+            width: 140px;
+            min-height: 45px;
+            padding: 5px;
+            resize: none;
+            box-sizing: border-box;
+            border: 1px solid #111;
+            background: transparent;
+            font: inherit;
+            outline: none;
+        }
     </style>
     <style>
         #rabbi-toggle {
@@ -247,6 +267,7 @@
     <meta name="description" content="mrrrrrrrrrrrrpppp">
     <meta name="author" content="the mrrrp.cat enterprises">
 
+<<<<<<< HEAD
     <link rel="canonical" href="https://mrrrp.cat/">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://mrrrp.cat/">
@@ -432,6 +453,8 @@
             <th><img src="media/sara-cat-rofa-cat.gif"></th>
         </tr>
 
+        <div id="commentCanvas"><a style="color: black; font-size: 50px">loading comments after page loads</a></div>
+        <script src="/comments.js"></script>
         <script src="/main.js"></script>
 
 </body>
