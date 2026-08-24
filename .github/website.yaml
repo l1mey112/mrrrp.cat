@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment
+  namespace: mrrrp-website
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate: { maxUnavailable: 0, maxSurge: 1 }
+  selector:
+    matchLabels:
+      component: deployment
+  template:
+    metadata:
+      labels:
+        component: deployment
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 101
+        runAsGroup: 101
+        seccompProfile: { type: RuntimeDefault }
+      containers:
+        - name: nginx
+          image: ghcr.io/l1mey112/mrrrp:latest
+          ports:
+            - containerPort: 8080
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities: { drop: ["ALL"] }
+          readinessProbe:
+            httpGet: { path: /, port: 8080 }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service
+  namespace: mrrrp-website
+spec:
+  ports:
+    - port: 80
+      targetPort: 8080
+  selector:
+    component: deployment
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress
+  namespace: mrrrp-website
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: mrrrp.cat
+      http: &website
+        paths:
+          - backend:
+              service:
+                name: service
+                port:
+                  number: 80
+            path: /
+            pathType: Prefix
+    - host: www.mrrrp.cat
+      http: *website
