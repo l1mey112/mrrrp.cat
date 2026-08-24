@@ -16,11 +16,13 @@ function addComment(data) {
 }
 
 window.onload = () => {
-    canvas.querySelector("a").remove()
     fetch("/comments")
         .then(response => response.json())
         .then(comments => {
+            canvas.querySelector("a").remove()
             comments.forEach(addComment);
+        }).catch(e => {
+            canvas.querySelector("a").innerText = "nvm the thingy is brokey " + e;
         });
 }
 
