@@ -8,7 +8,6 @@
 </head>
 <body>
     <img id="img" src="media/jogn.jpeg">
-    <audio id="audio"></audio>
 
     <script>
         let meows = [];
@@ -16,10 +15,17 @@
             meows.push(`media/meow${i}.mp3`);
         }
 
+        // meow stacking and no meowmory leaks
         document.getElementById('img').onclick = () => {
-            document.getElementById('audio').src = meows[Math.floor(Math.random() * meows.length)];
-            document.getElementById('audio').play();
+            const meowmoew = document.createElement("audio");
+            meowmoew.src = meows[Math.floor(Math.random() * meows.length)];
+            document.body.appendChild(meowmoew);
+            meowmoew.play();
+            meowmoew.addEventListener("ended", (e) => {
+                e.target.remove();
+            });
         };
+
     </script>
 </body>
 </html>
