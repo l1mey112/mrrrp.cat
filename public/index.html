@@ -303,6 +303,17 @@
         <h1>webring support soon</h1>
         <h2><a href="mmrow.html">meow</a></h2>
         <h2><a href="https://maxbittker.github.io/warms/">warms (EXTERNAL SITE)</a></h2>
+
+        <h2><button id="tdfw-btn">click for funsies :3</button></a>
+        <script>
+            const tdfwBtn = document.getElementById("tdfw-btn");
+            tdfwBtn.onclick = () => {
+                const tdfw = document.createElement("script")
+                tdfw.setAttribute("src", "https://nthitz.github.io/turndownforwhatjs/tdfw.js");
+                document.body.appendChild(tdfw);
+            }
+        </script>
+
         <button id="spawn">spawn cat</button>
 
         <tr>
@@ -312,5 +323,6 @@
         </tr>
 
         <script src="/main.js"></script>
+
     </body>
 </html>
