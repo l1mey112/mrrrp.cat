@@ -10,11 +10,58 @@
         background: repeating-linear-gradient(90deg in hsl longer hue, red 0 50%) 0 / 200%;
         animation: r 1s linear infinite;
         }
-        
+
         @keyframes r {
         to {
             background-position: 100%;
         }
+        }
+
+        <!-- mouse effect stuff  -->
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: #111;
+            color: white;
+            overflow: hidden;
+            cursor: crosshair;
+        }
+
+        .star, .word {
+            position: fixed;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        .star {
+            animation: fall 900ms linear forwards;
+        }
+
+        .word {
+            font: bold 24px sans-serif;
+            animation: vanish 1.5s ease-out forwards;
+        }
+
+        @keyframes fall {
+            from {
+                transform: translate(0, 0) rotate(0);
+                opacity: 1;
+            }
+            to {
+                transform: translate(var(--x), 70px) rotate(180deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes vanish {
+            from {
+                transform: scale(1) rotate(0) skew(0);
+                opacity: 1;
+            }
+            to {
+                transform: scale(var(--size)) rotate(var(--rotate)) skew(var(--skew));
+                opacity: 0;
+            }
         }
     </style>
 
@@ -36,6 +83,42 @@
     <meta name="twitter:description" content="mrrrrrrrrrrrrpppp">
 </head>
 <body>
+    <script>
+    const texts = ["mrrrp", "meow", "miau", "☆", "boop", "mrrow", "purr", "hiss", "roar", "mrr", "fucking dies"];
+
+    document.onpointermove = e => {
+      if (Math.random() > .35) return;
+
+      const star = document.createElement("span");
+      star.className = "star";
+      star.textContent = "★";
+      star.style.left = e.clientX + "px";
+      star.style.top = e.clientY + "px";
+      star.style.color = `hsl(${Math.random() * 360},100%,65%)`;
+      star.style.fontSize = 8 + Math.random() * 14 + "px";
+      star.style.setProperty("--x", Math.random() * 50 - 25 + "px");
+      document.body.append(star);
+      star.onanimationend = () => star.remove();
+    };
+
+    document.onclick = e => {
+        const word = document.createElement("span");
+
+        word.className = "word";
+        word.textContent = texts[Math.random() * texts.length | 0];
+        word.style.left = e.clientX + "px";
+        word.style.top = e.clientY + "px";
+        word.style.color = `hsl(${Math.random() * 360},100%,70%)`;
+
+        word.style.setProperty("--size", .5 + Math.random() * 2);
+        word.style.setProperty("--stretch", .5 + Math.random() * 2);
+        word.style.setProperty("--rotate", Math.random() * 360 - 180 + "deg");
+        word.style.setProperty("--skew", Math.random() * 60 - 30 + "deg");
+
+        document.body.append(word);
+        word.onanimationend = () => word.remove();
+    };
+    </script>
     <h1>mrrrp</h1>
     <img src="/media/happy-cat.gif" alt="a happy cat">
 
