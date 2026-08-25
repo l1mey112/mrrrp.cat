@@ -34,7 +34,7 @@ jobs:
       # https://gist.github.com/avoidik/768b1ce51497a9f212ca7426e591baf9
       - name: sync
         run: |
-          POD=$(kubectl get pod -n $NS -l component=deployment -o name | head -1)
+          POD=$(kubectl get pod -n $NS -l component=deployment -o jsonpath='{.items[0].metadata.name}')
           RSH=$(mktemp); printf '#!/bin/sh\npod=$1; shift\nexec kubectl exec -i -n %s "$pod" -- "$@"\n' "$NS" > "$RSH"; chmod +x "$RSH"
           rsync --blocking-io -rlt --delete --omit-dir-times --no-owner --no-group \
             --exclude=.git --exclude=data --exclude=logs --exclude=node_modules \
