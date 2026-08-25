@@ -22,8 +22,7 @@ window.onload = () => {
             canvas.querySelector("a").remove()
             comments.forEach(addComment);
         }).catch(e => {
-            let a = canvas.querySelector("a")
-            if(a) a.innerText = "nvm the thingy is brokey " + e;
+            a.innerText = "nvm the thingy is brokey " + e;
         });
 }
 
