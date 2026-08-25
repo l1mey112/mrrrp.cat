@@ -4,7 +4,7 @@ const commentsFile = '/tmp/mrrrp-comments.json';
 
 async function readComments(r) {
     try {
-        const contents = fs.readFile(commentsFile, 'utf8');
+        const contents = await fs.promises.readFile(commentsFile, 'utf8');
 
         if (!contents.trim()) {
             return [];
@@ -20,7 +20,7 @@ async function readComments(r) {
 
 async function writeComments(r, comments) {
     try {
-        fs.writeFile(
+        await fs.promises.writeFile(
             commentsFile,
             JSON.stringify(comments, null, 2),
             'utf8'
