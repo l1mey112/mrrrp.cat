@@ -1,4 +1,9 @@
 const canvas = document.querySelector("#commentCanvas");
+const loading_text = document.createElement("a");
+loading_text.style = "color: black; font-size: 50px";
+loading_text.innerText = "refreshing comments";
+refresh_comments();
+// window.onload = refresh_comments;
 
 function addComment(data) {
     const comment = document.createElement("div");
@@ -15,11 +20,14 @@ function addComment(data) {
     canvas.append(comment);
 }
 
-window.onload = () => {
+function refresh_comments() {
+    comments = [];
+    canvas.innerHTML = "";
+    canvas.append(loading_text)
     fetch("/comments")
         .then(response => response.json())
         .then(comments => {
-            canvas.querySelector("a").remove()
+            loading_text.remove()
             comments.forEach(addComment);
         }).catch(e => {
             a.innerText = "nvm the thingy is brokey " + e;
