@@ -15,4 +15,13 @@ https://nginx.org/en/docs/njs/node_modules.html
 
 # webring support soon
 
-test
+# Prod
+
+- The way production is done is super simple. It's made to be exactly like the development environment.
+- The "box" just does `make`. Everything is persisted and it's ran from the repo root. Use `data/` to dump stuff and nginx is configured to dump into `logs/`
+
+```
+data/
+logs/
+```
+
