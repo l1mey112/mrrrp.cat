@@ -14,3 +14,5 @@ no asking for permission
 https://nginx.org/en/docs/njs/node_modules.html
 
 # webring support soon
+
+test
