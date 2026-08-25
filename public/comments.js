@@ -23,7 +23,8 @@ function load_comments() {
             canvas.querySelector("a").remove()
             comments.forEach(addComment);
         }).catch(e => {
-            canvas.querySelector("a").innerText = "nvm the thingy is brokey " + e;
+            let a = canvas.querySelector("a")
+            if(a) a.innerText = "nvm the thingy is brokey " + e;
         });
 }
 
