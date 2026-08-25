@@ -1,3 +1,5 @@
+/// <reference path="vendor/njs.d.ts" />
+
 import fs from 'fs';
 
 const commentsFile = '/tmp/mrrrp-comments.json';

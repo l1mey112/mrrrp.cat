@@ -15,7 +15,8 @@ function addComment(data) {
     canvas.append(comment);
 }
 
-window.onload = () => {
+
+function load_comments() {
     fetch("/comments")
         .then(response => response.json())
         .then(comments => {
@@ -25,6 +26,8 @@ window.onload = () => {
             canvas.querySelector("a").innerText = "nvm the thingy is brokey " + e;
         });
 }
+
+window.onload = load_comments;
 
 canvas.onclick = e => {
     if(document.querySelector("#commentInput")) return;
