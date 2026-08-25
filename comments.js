@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-const commentsFile = '/tmp/mrrrp-comments.json';
+const commentsFile = 'data/comments.json';
 
 async function readComments(r) {
     try {

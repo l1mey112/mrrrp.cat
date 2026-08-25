@@ -1,10 +1,20 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mrrrp-website
+  namespace: mrrrp-website
+spec:
+  accessModes: [ReadWriteOnce]
+  resources:
+    requests:
+      storage: 1Gi
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: deployment
   namespace: mrrrp-website
 spec:
-  # only one!
   replicas: 1
   strategy:
     type: Recreate
@@ -20,10 +30,13 @@ spec:
         runAsNonRoot: true
         runAsUser: 101
         runAsGroup: 101
+        fsGroup: 101
         seccompProfile: { type: RuntimeDefault }
       containers:
         - name: nginx
           image: ghcr.io/l1mey112/mrrrp:latest
+          command: ["sh", "-c", "until [ -f Makefile ] && [ -f nginx.conf ]; do sleep 2; done; exec make"]
+          workingDir: /app
           ports:
             - containerPort: 8080
           securityContext:
@@ -31,6 +44,13 @@ spec:
             capabilities: { drop: ["ALL"] }
           readinessProbe:
             httpGet: { path: /, port: 8080 }
+          volumeMounts:
+            - name: app
+              mountPath: /app
+      volumes:
+        - name: app
+          persistentVolumeClaim:
+            claimName: mrrrp-website
 ---
 apiVersion: v1
 kind: Service

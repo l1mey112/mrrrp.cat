@@ -8,33 +8,47 @@ concurrency: prod
 
 permissions:
   contents: read
-  packages: write
   deployments: write
 
+env:
+  NS: mrrrp-website
+
 jobs:
-  prod:
+  deploy:
     runs-on: mrrrp-set
     environment:
       name: production
       url: https://mrrrp.cat
-    env:
-      IMAGE: ghcr.io/l1mey112/mrrrp
     steps:
       - uses: actions/checkout@v4
-
-      # my runners are daemonless
-      - name: build & push image
-        run: |
-          sudo apt-get update -qq && sudo apt-get install -y -qq podman
-          echo "${{ secrets.GITHUB_TOKEN }}" | sudo podman login ghcr.io -u ${{ github.actor }} --password-stdin
-          sudo podman build --isolation=chroot -t "$IMAGE:${{ github.sha }}" -t "$IMAGE:latest" .
-          sudo podman push "$IMAGE:${{ github.sha }}"
-          sudo podman push "$IMAGE:latest"
 
       - uses: azure/setup-kubectl@v4
 
       - name: apply
+        run: kubectl apply -k .github
+
+      - name: wait
+        run: kubectl wait -n $NS --for=jsonpath='{.status.phase}'=Running pod -l component=deployment --timeout=120s
+
+      # https://serverfault.com/questions/741670/rsync-files-to-a-kubernetes-pod
+      # https://gist.github.com/avoidik/768b1ce51497a9f212ca7426e591baf9
+      - name: sync
         run: |
-          sed -i "s|newTag: .*|newTag: ${{ github.sha }}|" .github/kustomization.yaml
-          kubectl apply -k .github
-          kubectl -n mrrrp-website rollout status deploy/deployment --timeout=300s
+          POD=$(kubectl get pod -n $NS -l component=deployment -o name | head -1)
+          RSH=$(mktemp); printf '#!/bin/sh\npod=$1; shift\nexec kubectl exec -i -n %s "$pod" -- "$@"\n' "$NS" > "$RSH"; chmod +x "$RSH"
+          rsync --blocking-io -rlt --delete --omit-dir-times --no-owner --no-group \
+            --exclude=.git --exclude=data --exclude=logs --exclude=node_modules \
+            -e "$RSH" ./ "$POD:/app/"
+
+      - name: restart
+        run: |
+          kubectl rollout restart -n $NS deploy/deployment
+          kubectl rollout status -n $NS deploy/deployment --timeout=120s
+
+  tail:
+    needs: deploy
+    runs-on: mrrrp-set
+    steps:
+      - uses: azure/setup-kubectl@v4
+
+      - run: timeout 30 kubectl logs -f -n $NS deploy/deployment --tail=50 || [ $? -eq 124 ]
