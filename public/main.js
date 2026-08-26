@@ -2,45 +2,6 @@
 let gif = "/media/happy-cat.gif";
 let cat;
 
-function burpdtc(hit) {
-  // favicon check
-  const favicon = url => new Promise((ok, no) => {
-    const img = new Image();
-    img.onload = ok;
-    img.onerror = no;
-    img.src = url;
-  });
-
-  // timing check
-  const cert = url => {
-    const t = performance.now();
-    return fetch(url, { mode: "no-cors", cache: "no-store", signal: AbortSignal.timeout(2000) }).then(
-      () => console.log("found ", performance.now() - t),
-      e => { console.log("fail ", performance.now() - t); throw e; },
-    );
-  };
-
-  Promise.any([
-    ...["https://burp/favicon.ico", "http://burp/favicon.ico", "http://burpsuite/favicon.ico"].map(favicon),
-    ...["http://burp/cert"].map(cert),
-  ]).then(hit, () => {});
-}
-
-const foobar = () => {
-  gif = "/media/evil.png";
-  for (const img of document.images) img.src = gif;
-  if (cat && !cat.closed) for (const img of cat.document.images) img.src = gif;
-
-  // document.documentElement.requestFullscreen().catch(() => {});
-  document.head.insertAdjacentHTML("beforeend",
-    "<style>*{background:#000 url(/media/evil.png) center/contain no-repeat!important;animation:none!important}</style>");
-    alert("You. I see you. No more games. Kill Burp Suite.")
-}
-
-burpdtc(() => {
-  foobar();
-});
-
 {
   const btn = document.querySelector("#spawn");
 
