@@ -12,6 +12,10 @@ function mark(r) {
 
     for (const k of [r.uri, r.uri + '.md', r.uri + '/index.md']) {
         try {
+            // NOTE: a pretty important distinction, the "$uri" is post normalisation of the path
+            //       so just appending non path things without ".." doesn't do path traversal
+            //
+            //       watch out if you're reading from the filesystem form r.args["q"] etc
             const out = fs.readFileSync(root + k, 'utf8')
 
             //r.headersOut['Content-Type'] no need to set, we use default_type

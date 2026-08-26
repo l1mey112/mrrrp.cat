@@ -1,5 +1,8 @@
+/// <reference path="vendor/njs.d.ts" />
+
 import fs from 'fs';
 
+// NOTE: readFileSync performs a plain open() and reads from the startup cwd (no ngx config)
 const commentsFile = 'data/comments.json';
 
 async function readComments(r) {
@@ -33,6 +36,7 @@ async function writeComments(r, comments) {
     }
 }
 
+/** @param {NginxHTTPRequest} r */
 async function comments(r) {
     if (r.method !== 'GET' && r.method !== 'POST') {
         r.return(405, 'Method not allowed');

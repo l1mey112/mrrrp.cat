@@ -1,4 +1,3 @@
-PREFIX := $(CURDIR)
 NJS := $(shell for p in \
 	/etc/nginx/modules/ngx_http_js_module.so \
 	/usr/lib/nginx/modules/ngx_http_js_module.so \
@@ -13,7 +12,7 @@ NJS := $(shell for p in \
 web:
 	@mkdir -p data
 	@[ -n "$(NJS)" ] || { echo "ngx_http_js_module.so not found"; exit 1; }
-	nginx -p $(PREFIX) -c nginx.conf -e /dev/stdout -g 'load_module $(NJS); daemon off;'
+	nginx -p $(CURDIR)/.ngx -c nginx.conf -e /dev/stdout -g 'load_module $(NJS); daemon off;'
 
 update_repology_data:
 	ruby vendor/update_repology_data.rb
