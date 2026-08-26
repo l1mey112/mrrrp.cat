@@ -11,9 +11,9 @@ NJS := $(shell for p in \
 .PHONY: web update_repology_data
 
 web:
-	@mkdir -p data logs
+	@mkdir -p data
 	@[ -n "$(NJS)" ] || { echo "ngx_http_js_module.so not found"; exit 1; }
 	nginx -p $(PREFIX) -c nginx.conf -e /dev/stdout -g 'load_module $(NJS); daemon off;'
 
 update_repology_data:
-	ruby build/update_repology_data.rb
+	ruby vendor/update_repology_data.rb
