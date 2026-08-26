@@ -1,5 +1,9 @@
 # if you are invited here, write whatever you want!
 
+TODO: documentation
+TODO: directory map
+TODO: make more palatable, more maintainable, and more approachable for all 
+
 anyone can write anything on it
 
 and it will  show up on https://mrrrp.cat/

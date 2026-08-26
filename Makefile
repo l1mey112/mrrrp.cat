@@ -10,14 +10,10 @@ NJS := $(shell for p in \
 
 .PHONY: web update_repology_data
 
-# to get njs
-# debian: libnginx-mod-http-js
-# arch: nginx-mod-njs
-
 web:
 	@mkdir -p data logs
 	@[ -n "$(NJS)" ] || { echo "ngx_http_js_module.so not found"; exit 1; }
-	nginx -p $(PREFIX) -c nginx.conf -g 'load_module $(NJS); working_directory $(PREFIX); daemon off;'
+	nginx -p $(PREFIX) -c nginx.conf -e /dev/stdout -g 'load_module $(NJS); daemon off;'
 
 update_repology_data:
 	ruby build/update_repology_data.rb
