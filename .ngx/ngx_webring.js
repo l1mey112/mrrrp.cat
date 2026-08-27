@@ -64,6 +64,8 @@ we're going to invite you (${host}) to mrrrp.cat webring
 </body>
 </html>
     `
+
+    r.headersOut['Content-Type'] = 'text/html'
     r.return(200, h.toString())
 }
 
