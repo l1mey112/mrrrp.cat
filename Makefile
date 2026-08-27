@@ -15,4 +15,4 @@ web:
 	nginx -p $(CURDIR)/.ngx -c nginx.conf -e /dev/stdout -g 'load_module $(NJS); daemon off;'
 
 update_repology_data:
-	ruby vendor/update_repology_data.rb
+	ruby .ngx/vendor/update_repology_data.rb
