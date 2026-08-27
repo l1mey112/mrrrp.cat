@@ -1,4 +1,10 @@
+OS   := $(shell uname -s | tr A-Z a-z)
+ARCH := $(shell uname -m)
+VER  := $(shell nginx -v 2>&1 | sed -n 's|.*nginx/\([0-9.]*\).*|\1|p')
+#LIBC := $(shell [ -e /lib/ld-musl-$(ARCH).so.1 ] && echo musl || echo gnu)
+
 NJS := $(shell for p in \
+	$(CURDIR)/.ngx/vendor/modules/linux-$(ARCH)-gnu-$(VER).so \
 	/etc/nginx/modules/ngx_http_js_module.so \
 	/usr/lib/nginx/modules/ngx_http_js_module.so \
 	/usr/lib64/nginx/modules/ngx_http_js_module.so \
@@ -11,7 +17,7 @@ NJS := $(shell for p in \
 
 web:
 	@mkdir -p data
-	@[ -n "$(NJS)" ] || { echo "ngx_http_js_module.so not found"; exit 1; }
+	@[ -n "$(NJS)" ] || { printf 'no ngx_http_js_module.so for nginx %s\n' "$(VER)"; exit 1; }
 	nginx -p $(CURDIR)/.ngx -c nginx.conf -e /dev/stdout -g 'load_module $(NJS); daemon off;'
 
 update_repology_data:
