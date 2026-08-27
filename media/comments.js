@@ -20,6 +20,11 @@ function addComment(data) {
     canvas.append(comment);
 }
 
+function toggle_comments() {
+    canvas.style.display =
+        canvas.style.display === "none" ? "block" : "none";
+}
+
 function refresh_comments() {
     comments = [];
     canvas.innerHTML = "";

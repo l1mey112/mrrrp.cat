@@ -1,0 +1,102 @@
+#commentCanvas {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    width: 880px;
+    height: 480px;
+    overflow: hidden;
+    border: 3px solid #222;
+    background:
+    radial-gradient(#0001 1px, transparent 1px), #f4e7bd;
+    background-size: 8px 8px;
+    box-shadow: 5px 5px 0 #222;
+    cursor: crosshair;
+}
+
+.comment {
+    position: absolute;
+    max-width: 150px;
+    padding: 8px 12px;
+    color: #111;
+    background: #fff8d8;
+    border: 2px solid #111;
+    border-radius: 4px;
+    font: bold 13px "Comic Sans MS", "Comic Sans", cursive;
+    line-height: 1.1;
+    transform: rotate(var(--rotation));
+    box-shadow: 3px 3px 0 #111;
+}
+
+.comment::after {
+    content: "";
+    position: absolute;
+    left: 12px;
+    bottom: -10px;
+    width: 16px;
+    height: 16px;
+    background: #fff8d8;
+    border-right: 2px solid #111;
+    border-bottom: 2px solid #111;
+    transform: rotate(45deg);
+}
+
+#commentInput {
+    position: absolute;
+    z-index: 2;
+    padding: 7px;
+    width: fit-content;
+    background: #fff8d8;
+    border: 2px solid #111;
+    font: 13px "Comic Sans MS", "Comic Sans", cursive;
+}
+
+#commentInput textarea {
+    width: 140px;
+    min-height: 45px;
+    padding: 5px;
+    resize: none;
+    box-sizing: border-box;
+    border: 1px solid #111;
+    background: transparent;
+    font: inherit;
+    outline: none;
+}
+
+#commentInput #post {
+    margin-top: 5px;
+    padding: 3px 8px;
+    border: 1px solid #111;
+    background: #222;
+    color: white;
+    cursor: pointer;
+}
+
+#commentInput #close {
+    margin-top: 5px;
+    float: right;
+    padding: 3px 8px;
+    border: 1px solid #111;
+    background: #222;
+    color: white;
+    cursor: pointer;
+}
+
+
+@media screen and (max-width: 1500px) {
+    #commentCanvas { position: static; }
+    /* TODO: theres fix the offset from this */
+    #commentInput { position: relative; }
+    .comment { position: relative; }
+}
+
+#commentInput textarea {
+    width: 140px;
+    min-height: 45px;
+    padding: 5px;
+    resize: none;
+    box-sizing: border-box;
+    border: 1px solid #111;
+    background: transparent;
+    font: inherit;
+    outline: none;
+}
