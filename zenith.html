@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Zenith Screensaver</title>
+  <style>
+    html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; background: #101012; }
+    .logo { position: fixed; width: 120px; height: 120px; transform-origin: 60px 76.62px; }
+  </style>
+</head>
+<body>
+  <svg width="0" height="0" aria-hidden="true">
+    <symbol id="zenith-logo" viewBox="0 -3.3 39 39">
+      <path d="M0 32.4L19.5 0L26.759 12.0611L25.5667 14.0422L19.5 3.96218L3.45131 30.6277H7.13333L19.5 10.08L23.7257 17.1011L17.5144 27.4214C17.3225 27.7401 17.2173 28.1055 17.2096 28.4797C17.2019 28.8539 17.292 29.2234 17.4706 29.5502C17.6491 29.8769 17.9097 30.149 18.2254 30.3384C18.5412 30.5278 18.9006 30.6277 19.2667 30.6277H35.5487L28.6 19.0822L23.7846 27.0831H21.4L29.4 13.7908C29.7273 13.2484 30.185 12.8007 30.7295 12.4905C31.2739 12.1802 31.8871 12.0177 32.5104 12.0185H32.8513H38.918L34.6667 19.0822L33.4743 17.1011L35.4667 13.7908H32.8469C32.1868 13.7908 31.5739 14.1409 31.2279 14.7158L29.7923 17.1011L39 32.4H18.7479C18.0903 32.4 17.4446 32.2206 16.8774 31.8803C16.3102 31.5401 15.8421 31.0512 15.5213 30.4643C15.2005 29.8773 15.0387 29.2134 15.0525 28.5412C15.0664 27.869 15.2553 27.2127 15.6 26.64L21.341 17.1011L19.5 14.0422L8.45131 32.4H0Z" fill="#5b2ebe"/>
+    </symbol>
+  </svg>
+  <script>
+    const requested = Number.parseInt(new URLSearchParams(location.search).get('z'), 10);
+    const count = Math.min(100, requested > 0 ? requested : 10);
+    document.currentScript.insertAdjacentHTML('beforebegin', '<svg class="logo" role="img" aria-label="Zenith logo"><use href="#zenith-logo"/></svg>'.repeat(count));
+    const logos = document.querySelectorAll('.logo');
+    const triangle = [{ x: -60, y: 33.23 }, { x: 0, y: -66.46 }, { x: 60, y: 33.23 }];
+    const notch = [{ x: 22.34, y: -29.35 }, { x: 59.75, y: -29.48 }, { x: 46.67, y: -7.75 }, { x: 31.67, y: -13.84 }];
+    const shapes = [triangle, notch];
+    const origin = { x: 60, y: 76.62 };
+    const inertia = 2300;
+    const bodies = [...logos].map(logo => ({
+      logo,
+      x: 69 + Math.random() * Math.max(0, innerWidth - 138),
+      y: 69 + Math.random() * Math.max(0, innerHeight - 138),
+      dx: (100 + Math.random() * 60) * (Math.random() < .5 ? -1 : 1),
+      dy: (100 + Math.random() * 60) * (Math.random() < .5 ? -1 : 1),
+      angle: 0,
+      spin: 0
+    }));
+    let last = performance.now();
+
+    function vertices(body, shape = triangle) {
+      const cos = Math.cos(body.angle);
+      const sin = Math.sin(body.angle);
+      return shape.map(point => ({
+        x: body.x + point.x * cos - point.y * sin,
+        y: body.y + point.x * sin + point.y * cos
+      }));
+    }
+
+    function allVertices(body) {
+      return shapes.flatMap(shape => vertices(body, shape));
+    }
+
+    function collide(body, normalX, normalY, depth) {
+      const contacts = allVertices(body).map(point => ({ point, depth: depth(point) })).filter(hit => hit.depth > 0);
+      if (!contacts.length) return;
+
+      const penetration = Math.max(...contacts.map(hit => hit.depth));
+      const deepest = contacts.filter(hit => hit.depth > penetration - 1);
+      const contact = deepest.reduce((sum, hit) => ({ x: sum.x + hit.point.x / deepest.length, y: sum.y + hit.point.y / deepest.length }), { x: 0, y: 0 });
+      const radiusX = contact.x - body.x;
+      const radiusY = contact.y - body.y;
+      const normalSpeed = (body.dx - body.spin * radiusY) * normalX + (body.dy + body.spin * radiusX) * normalY;
+
+      body.x += normalX * penetration;
+      body.y += normalY * penetration;
+      if (normalSpeed >= 0) return;
+
+      const lever = radiusX * normalY - radiusY * normalX;
+      const impulse = -2 * normalSpeed / (1 + lever * lever / inertia);
+      body.dx += impulse * normalX;
+      body.dy += impulse * normalY;
+      body.spin += lever * impulse / inertia;
+    }
+
+    function collideShapes(a, b, aShape, bShape) {
+      const aPoints = vertices(a, aShape);
+      const bPoints = vertices(b, bShape);
+      let overlap = Infinity;
+      let normal;
+
+      for (const polygon of [aPoints, bPoints]) {
+        for (let i = 0; i < polygon.length; i++) {
+          const next = polygon[(i + 1) % polygon.length];
+          const edgeX = next.x - polygon[i].x;
+          const edgeY = next.y - polygon[i].y;
+          const length = Math.hypot(edgeX, edgeY);
+          const axis = { x: -edgeY / length, y: edgeX / length };
+          const aProjection = aPoints.map(point => point.x * axis.x + point.y * axis.y);
+          const bProjection = bPoints.map(point => point.x * axis.x + point.y * axis.y);
+          const axisOverlap = Math.min(Math.max(...aProjection), Math.max(...bProjection)) - Math.max(Math.min(...aProjection), Math.min(...bProjection));
+          if (axisOverlap <= 0) return;
+          if (axisOverlap < overlap) {
+            overlap = axisOverlap;
+            normal = axis;
+          }
+        }
+      }
+
+      if ((b.x - a.x) * normal.x + (b.y - a.y) * normal.y < 0) {
+        normal.x *= -1;
+        normal.y *= -1;
+      }
+
+      const aDots = aPoints.map(point => point.x * normal.x + point.y * normal.y);
+      const bDots = bPoints.map(point => point.x * normal.x + point.y * normal.y);
+      const aEdge = aPoints.filter((_, i) => aDots[i] > Math.max(...aDots) - 1);
+      const bEdge = bPoints.filter((_, i) => bDots[i] < Math.min(...bDots) + 1);
+      const aContact = aEdge.reduce((sum, point) => ({ x: sum.x + point.x / aEdge.length, y: sum.y + point.y / aEdge.length }), { x: 0, y: 0 });
+      const bContact = bEdge.reduce((sum, point) => ({ x: sum.x + point.x / bEdge.length, y: sum.y + point.y / bEdge.length }), { x: 0, y: 0 });
+      const contact = aEdge.length === 1 && bEdge.length > 1 ? aContact : bEdge.length === 1 && aEdge.length > 1 ? bContact : { x: (aContact.x + bContact.x) / 2, y: (aContact.y + bContact.y) / 2 };
+      const correction = (overlap + .01) / 2;
+      a.x -= normal.x * correction;
+      a.y -= normal.y * correction;
+      b.x += normal.x * correction;
+      b.y += normal.y * correction;
+
+      const aRadius = { x: contact.x - a.x, y: contact.y - a.y };
+      const bRadius = { x: contact.x - b.x, y: contact.y - b.y };
+      const relativeX = b.dx - b.spin * bRadius.y - a.dx + a.spin * aRadius.y;
+      const relativeY = b.dy + b.spin * bRadius.x - a.dy - a.spin * aRadius.x;
+      const normalSpeed = relativeX * normal.x + relativeY * normal.y;
+      if (normalSpeed >= 0) return;
+
+      const aLever = aRadius.x * normal.y - aRadius.y * normal.x;
+      const bLever = bRadius.x * normal.y - bRadius.y * normal.x;
+      const impulse = -2 * normalSpeed / (2 + (aLever * aLever + bLever * bLever) / inertia);
+      a.dx -= impulse * normal.x;
+      a.dy -= impulse * normal.y;
+      a.spin -= aLever * impulse / inertia;
+      b.dx += impulse * normal.x;
+      b.dy += impulse * normal.y;
+      b.spin += bLever * impulse / inertia;
+    }
+
+    function collideBodies(a, b) {
+      for (const aShape of shapes) {
+        for (const bShape of shapes) collideShapes(a, b, aShape, bShape);
+      }
+    }
+
+    function move(now) {
+      const elapsed = Math.min((now - last) / 1000, 1 / 30);
+      last = now;
+      bodies.forEach(body => {
+        body.x += body.dx * elapsed;
+        body.y += body.dy * elapsed;
+        body.angle += body.spin * elapsed;
+
+        collide(body, 1, 0, point => -point.x);
+        collide(body, -1, 0, point => point.x - innerWidth);
+        collide(body, 0, 1, point => -point.y);
+        collide(body, 0, -1, point => point.y - innerHeight);
+      });
+      for (let i = 0; i < bodies.length; i++) {
+        for (let j = i + 1; j < bodies.length; j++) collideBodies(bodies[i], bodies[j]);
+      }
+      bodies.forEach(body => {
+        body.logo.style.transform = `translate(${body.x - origin.x}px, ${body.y - origin.y}px) rotate(${body.angle}rad)`;
+      });
+      requestAnimationFrame(move);
+    }
+
+    requestAnimationFrame(move);
+  </script>
+</body>
+</html>
