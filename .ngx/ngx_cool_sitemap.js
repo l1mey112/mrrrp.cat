@@ -22,7 +22,7 @@ in nginx.
 
 import fs from 'fs'
 import xml from 'xml'
-import { html, raw } from './vendor/sanitise_html.js'
+import { html } from './vendor/html.js'
 
 /** @param {NginxHTTPRequest} r */
 function render(r) {

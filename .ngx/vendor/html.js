@@ -14,7 +14,20 @@ and the output is a Raw value which can be toString()ed at the end to get
 the html
 
     r.return(200, html`<ul>${h}</ul>`.toString())
+
+
+##### NEW ###################################
+
+also supports returning markdown with
+
+    m = md`
+        # hello!!
+
+        <p>also works with html!<\p>
+    `
 */
+
+import { marked } from './marked.esm.js'
 
 class Raw {
     /** @param {string} s  */
@@ -46,6 +59,15 @@ export function html(strings, ...vals) {
         out += strings[i + 1];
     }
     return new Raw(out);
+}
+
+/**
+ * @param {TemplateStringsArray} strings
+ * @param {...(Raw|string|number|boolean|null|undefined|readonly (Raw|string|number)[])} vals
+ * @returns {Raw}
+ */
+export function md(strings, ...vals) {
+    return new Raw(marked.parse(html(strings, ...vals).toString()))
 }
 
 /**
