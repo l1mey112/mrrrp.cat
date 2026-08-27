@@ -43,7 +43,7 @@ canvas.onclick = e => {
     input.style.top = `${e.offsetY}px`;
 
     input.innerHTML = `
-                    <textarea rows="3" placeholder="ComMENt pls"></textarea>
+                    <textarea style="color:black;" rows="3" placeholder="ComMENt pls"></textarea>
                     <br>
                     <button id="post">Post</button>
                     <button id="close">Close</button>
