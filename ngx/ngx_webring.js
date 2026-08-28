@@ -124,6 +124,9 @@ we're going to invite you (${host}) to mrrrp.cat webring
     title="mrrrp.cat webring"
     loading="lazy"
     style="display:block;width:100%;height:56px;margin:0 auto;border:0"></iframe>`}</code></pre>
+
+also, please see [#bad-iframe](#bad-iframe) if there are other issues
+    
 </details>
 
 # final step!
@@ -145,6 +148,46 @@ https://github.com/l1mey112/mrrrp.cat/blob/master/ngx/ngx_webring.js
 - add another route, maybe /iframe2
 - add more functionality!
 - add whatever you want! the code should be simple enough!
+
+<h1 id="bad-iframe">debugging bad iframe styles</h1>
+
+<details>
+<summary>open</summary>
+
+## weird text colours
+
+you can set a \`?theme=dark\` (the default is \`?theme=light\`, leave it empty if you want this) which will change the text/link colour of your embed. the iframe is transparent, this won't change the background.
+
+## mismatched colour
+
+the iframe actually has a transparent background. the image you're seeing below here should never ever happen.
+
+[mrrrp.cat webring where the iframe background colour (white) is mismatched to the website background (dark)](/media/webring_bad_iframe.png)
+
+this took me a while to figure out. the CSS Color Adjust spec basically says that if an iframe has a \`color-scheme\` that is different to the surrounding page it will rerender with a different opaque background.
+
+if you set any of these offending objects
+
+- \`<meta name=color-scheme content="light dark">\`
+- \`.webring-frame { color-scheme: light dark }\` set on an iframe
+
+such that the color-scheme is different to the one set on the iframe (which is none!), you need to set the \`?scheme=\` parameter. below is an example:
+
+<pre><code>${`<iframe src="https://mrrrp.cat/ring/${host}/iframe?theme=dark&scheme=light%20dark"
+    title="mrrrp.cat webring"
+    loading="lazy"
+    style="display:block;width:100%;height:56px;margin:0 auto;border:0"></iframe>`}</code></pre>
+
+probably related issues:
+
+- https://github.com/w3c/csswg-drafts/issues/4772
+- https://github.com/w3c/csswg-drafts/issues/13843
+
+## other issues? you can read the code
+
+https://github.com/l1mey112/mrrrp.cat/blob/master/ngx/ngx_webring.js
+
+</details>
 
 </body>
 </html>`
@@ -205,8 +248,10 @@ function ring_iframe(r, host) {
             }
         </style>
         <script>
-            const t = new URLSearchParams(location.search).get('theme')
+            const q = new URLSearchParams(location.search)
+            const t = q.get('theme')
             if (t === 'dark' || t === 'light') document.documentElement.dataset.theme = t
+            document.documentElement.style.colorScheme = q.get('scheme')
         </script>
         <nav>
             <a rel="prev" href="//mrrrp.cat/ring/${host}/prev" target="_top">${`<< ${webring[idx_prev]}`}</a> <img src="//mrrrp.cat/media/cat128/${cate_images[a]}" alt="cute cat">
