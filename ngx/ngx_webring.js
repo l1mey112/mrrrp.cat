@@ -126,7 +126,7 @@ we're going to invite you (${host}) to mrrrp.cat webring
     style="display:block;width:100%;height:56px;margin:0 auto;border:0"></iframe>`}</code></pre>
 
 also, please see [#bad-iframe](#bad-iframe) if there are other issues
-    
+
 </details>
 
 # final step!
@@ -150,9 +150,6 @@ https://github.com/l1mey112/mrrrp.cat/blob/master/ngx/ngx_webring.js
 - add whatever you want! the code should be simple enough!
 
 <h1 id="bad-iframe">debugging bad iframe styles</h1>
-
-<details>
-<summary>open</summary>
 
 ## weird text colours
 
@@ -186,8 +183,6 @@ probably related issues:
 ## other issues? you can read the code
 
 https://github.com/l1mey112/mrrrp.cat/blob/master/ngx/ngx_webring.js
-
-</details>
 
 </body>
 </html>`
