@@ -186,6 +186,14 @@ function ring_iframe(r, host) {
             a { color: #0000EE; white-space: nowrap; }
             a:hover, a:focus { color: #000; }
             .sep { opacity: .5; padding: 0 .15em; }
+            @media (prefers-color-scheme: dark) {
+                body { color: #eee; }
+                a { color: #5aa2ff; }
+                a:hover, a:focus { color: #fff; }
+            }
+            [data-theme="light"] { color: #111; }
+            [data-theme="light"] a { color: #0000EE; }
+            [data-theme="light"] a:hover, [data-theme="light"] a:focus { color: #000; }
             [data-theme="dark"] { color: #eee; }
             [data-theme="dark"] a { color: #5aa2ff; }
             [data-theme="dark"] a:hover, [data-theme="dark"] a:focus { color: #fff; }
@@ -204,8 +212,8 @@ function ring_iframe(r, host) {
             }
         </style>
         <script>
-            if (new URLSearchParams(location.search).get('theme') === 'dark')
-                document.documentElement.dataset.theme = 'dark';
+            const t = new URLSearchParams(location.search).get('theme')
+            if (t === 'dark' || t === 'light') document.documentElement.dataset.theme = t
         </script>
         <nav>
             <a rel="prev" href="//mrrrp.cat/ring/${host}/prev" target="_top">${`<< ${webring[idx_prev]}`}</a> <img src="//mrrrp.cat/media/cat128/${cate_images[a]}" alt="cute cat">
