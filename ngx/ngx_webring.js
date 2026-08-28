@@ -19,6 +19,8 @@ const webring = [
 
 /** @param {NginxHTTPRequest} r */
 function ring(r) {
+    // /ring
+    // /ring/random
     switch (r.uri) {
     case '/ring':
         return r.return(302, '//mrrrp.cat/')
@@ -27,6 +29,7 @@ function ring(r) {
         return r.return(302, `//${webring[idx]}/`)
     }
 
+    // /ring/l-m.dev/{next,prev,invite,iframe}
     const res = parse_ring(r.uri)
     if (!res) {
         r.return(404)
@@ -47,9 +50,10 @@ function ring(r) {
         return ring_iframe(r, res.host)
     }
 
+    // prev is as it is because modulo may be negative
     switch (res.cmd) {
     case "next": idx = (idx + 1) % webring.length; break
-    case "prev": idx = (idx - 1) % webring.length; break
+    case "prev": idx = (idx - 1 + webring.length) % webring.length; break
     }
     r.return(302, '//' + webring[idx] + '/')
 }
