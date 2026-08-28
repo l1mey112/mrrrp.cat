@@ -19,7 +19,11 @@ no asking for permission
 
 https://nginx.org/en/docs/njs/node_modules.html
 
-# webring support soon
+# the mrrrp.cat webring!
+
+if you have a website and we like you, try [https://mrrrp.cat/ring/example.com/invite](https://mrrrp.cat/ring/example.com/invite) with your domain name for instructions!
+
+![the mrrrp.cat webring](/media/webring_preview.png)
 
 # Prod
 
