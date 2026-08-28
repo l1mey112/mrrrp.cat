@@ -119,7 +119,7 @@ we're going to invite you (${host}) to mrrrp.cat webring
 <details>
 <summary>if the text colours aren't nice enough please try <code>?theme=dark</code> !!</summary>
 
-<pre><code>${`<iframe src="https://mrrrp.cat/ring/${host}/iframe"
+<pre><code>${`<iframe src="https://mrrrp.cat/ring/${host}/iframe?theme=dark"
     title="mrrrp.cat webring"
     loading="lazy"
     style="display:block;width:100%;height:56px;margin:0 auto;border:0"></iframe>`}</code></pre>
@@ -138,6 +138,12 @@ we need to get you onto the webring array inside the code so we can route to you
 
 https://github.com/l1mey112/mrrrp.cat/blob/master/ngx/ngx_webring.js
 
+
+**note!** if you don't like the iframe, you can
+
+- add another route, maybe /iframe2
+- add more functionality!
+- add whatever you want! the code should be simple enough!
 
 </body>
 </html>`
@@ -166,7 +172,7 @@ function ring_iframe(r, host) {
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <style>
-            html, body { height: 100%; margin: 0; background: transparent; color-scheme: light dark; }
+            html, body { height: 100%; margin: 0; background: transparent; color-scheme: light dark; overflow: hidden; }
             body {
                 box-sizing: border-box;
                 padding: 10px;
@@ -191,6 +197,10 @@ function ring_iframe(r, host) {
                 height: 1.5em;
                 width: auto;
                 vertical-align: middle;
+            }
+            @media (max-width: 20em) {
+                body { font-size: .75rem; }
+                nav img { display: none; }
             }
         </style>
         <script>
