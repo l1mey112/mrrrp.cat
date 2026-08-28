@@ -18,6 +18,7 @@ const cate_images = fs.readdirSync('media/cat128').filter(f => f.endsWith('.png'
 const webring = [
     'l-m.dev',
     'violetronics.dev',
+    // your site here!
 ]
 
 /** @param {NginxHTTPRequest} r */
@@ -75,6 +76,17 @@ function ring_invite(r, host) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>invite ${host}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@exampledev/new.css@1.1.2/new.min.css">
+    <style>
+        body {
+            padding: 10px;
+            min-height: 100vh;
+            background: #111;
+            color: white;
+            font-family: "Comic Sans MS", "Comic Sans", cursive;
+            /* justify-content: center; */
+        }
+    </style>
     <meta property="og:type" content="website">
     <meta property="og:locale" content="en_AU">
     <meta property="og:title" content="invite ${host} to mrrrp.cat webring">
@@ -94,7 +106,7 @@ we're going to invite you (${host}) to mrrrp.cat webring
     - next: \`<a href="https://mrrrp.cat/ring/${host}/next">/next</a>\`
     - prev: \`<a href="https://mrrrp.cat/ring/${host}/prev">/prev</a>\`
 
-2. **option 2.** please use this iframe
+2. **option 2 (preferred!!).** please use this iframe
 
 \`\`\`
 <iframe src="https://mrrrp.cat/ring/${host}/iframe"
@@ -102,6 +114,20 @@ we're going to invite you (${host}) to mrrrp.cat webring
     loading="lazy"
     style="display:block;width:100%;height:56px;margin:0 auto;border:0"></iframe>
 \`\`\`
+
+# final step!
+
+we need to get you onto the webring array inside the code so we can route to you
+
+![the webring array in code](/media/webring_array_example.png)
+
+1. if you have push access, great! edit the [ngx_webring.js](https://github.com/l1mey112/mrrrp.cat/blob/master/ngx/ngx_webring.js) file in the [l1mey112/mrrrp.cat](https://github.com/l1mey112/mrrrp.cat) repo and add your site
+
+2. if you don't have push access, that's okay! make a PR to [l1mey112/mrrrp.cat](https://github.com/l1mey112/mrrrp.cat) adding your domain to the file.
+  also we can give you push access if we trust you
+
+https://github.com/l1mey112/mrrrp.cat/blob/master/ngx/ngx_webring.js
+
 
 </body>
 </html>`
