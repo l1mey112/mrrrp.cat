@@ -38,7 +38,7 @@ spec:
       containers:
         - name: nginx
           image: ghcr.io/l1mey112/mrrrp:latest
-          command: ["sh", "-c", "until [ -f Makefile ] && [ -f .ngx/nginx.conf ]; do sleep 2; done; exec make"]
+          command: ["sh", "-c", "until [ -f Makefile ] && [ -f ngx/nginx.conf ]; do sleep 2; done; exec make"]
           workingDir: /app
           ports:
             - containerPort: 8080
