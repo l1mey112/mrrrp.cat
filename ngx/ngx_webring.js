@@ -23,6 +23,8 @@ const webring = [
     'unemployed.foo',
     'jstnc.dev',
     'isobel.zip'
+    //'odpay.net'
+    //'logykk.stream'
     // your site here!
 ]
 
@@ -165,7 +167,7 @@ you can set a \`?theme=dark\` (the default is \`?theme=light\`, leave it empty i
 
 the iframe actually has a transparent background. the image you're seeing below here should never ever happen.
 
-[mrrrp.cat webring where the iframe background colour (white) is mismatched to the website background (dark)](/media/webring_bad_iframe.png)
+![mrrrp.cat webring where the iframe background colour (white) is mismatched to the website background (dark)](/media/webring_bad_iframe.png)
 
 this took me a while to figure out. the CSS Color Adjust spec basically says that if an iframe has a \`color-scheme\` that is different to the surrounding page it will rerender with a different opaque background.
 
