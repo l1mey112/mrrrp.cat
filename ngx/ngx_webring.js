@@ -115,26 +115,35 @@ function ring_iframe(r, host) {
         <style>
             html, body { height: 100%; margin: 0; background: transparent; }
             body {
+                box-sizing: border-box;
+                padding: 10px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 text-align: center;
                 font: 1rem/1.5 "Comic Sans MS", "Comic Sans", cursive;
+                color: #111;
             }
-            nav { padding: 10px; }
-            a { white-space: nowrap; }
+            a { color: #0000EE; white-space: nowrap; }
+            a:hover, a:focus { color: #000; }
+            .sep { opacity: .5; padding: 0 .15em; }
             [data-theme="dark"] { color: #eee; }
             [data-theme="dark"] a { color: #5aa2ff; }
-            [data-theme="dark"] a:visited { color: #c9a8f0; }
+            [data-theme="dark"] a:hover, [data-theme="dark"] a:focus { color: #fff; }
+            @media (max-width: 24em) {
+                body { padding: 6px; font-size: .875rem; }
+            }
         </style>
         <script>
             if (new URLSearchParams(location.search).get('theme') === 'dark')
                 document.documentElement.dataset.theme = 'dark';
         </script>
         <nav>
-            <a rel="prev" href="//mrrrp.cat/ring/${host}/prev" target="_top">${'<< prev'}</a> |
-            <a href="//mrrrp.cat/ring" target="_blank" rel="noopener">mrrrp.cat webring</a>
-            (<a href="//mrrrp.cat/ring/random" target="_top">random</a>) |
+            <a rel="prev" href="//mrrrp.cat/ring/${host}/prev" target="_top">${'<< prev'}</a>
+            <span class="sep" aria-hidden="true">|</span>
+            <a href="//mrrrp.cat/ring" target="_top">mrrrp.cat webring</a>
+            (<a href="//mrrrp.cat/ring/random" target="_top">random</a>)
+            <span class="sep" aria-hidden="true">|</span>
             <a rel="next" href="//mrrrp.cat/ring/${host}/next" target="_top">${'next >>'}</a>
         </nav>
     `
