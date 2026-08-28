@@ -2,6 +2,7 @@
 // https://github.com/nginx/njs-examples
 /// <reference path="vendor/njs.d.ts" />
 
+import fs from 'fs'
 import { html, md } from './vendor/html.js'
 /*
 
@@ -11,6 +12,8 @@ https://mrrrp.cat/ring/l-m.dev/prev
 https://mrrrp.cat/ring/l-m.dev/iframe
 
 */
+
+const cate_images = fs.readdirSync('media/cat128').filter(f => f.endsWith('.png'));
 
 const webring = [
     'l-m.dev',
@@ -63,6 +66,8 @@ function ring(r) {
  * @param {string} host
  */
 function ring_invite(r, host) {
+    // media/webring_preview.png
+    
     const h = md`
 <!DOCTYPE html>
 <html lang="en">
@@ -74,6 +79,10 @@ function ring_invite(r, host) {
     <meta property="og:locale" content="en_AU">
     <meta property="og:title" content="invite ${host} to mrrrp.cat webring">
     <meta property="og:description" content="${host} -> click to get all the tools you need to set up!">
+    <meta property="og:image" content="https://mrrrp.cat/media/webring_preview.png">
+    <meta property="og:image:type" content="image/png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://mrrrp.cat/media/webring_preview.png">
 </head>
 <body>
 
@@ -95,8 +104,7 @@ we're going to invite you (${host}) to mrrrp.cat webring
 \`\`\`
 
 </body>
-</html>
-    `
+</html>`
 
     r.headersOut['Content-Type'] = 'text/html'
     r.return(200, h.toString())
@@ -107,6 +115,11 @@ we're going to invite you (${host}) to mrrrp.cat webring
  * @param {string} host
  */
 function ring_iframe(r, host) {
+    const n = cate_images.length
+    // generate two distinct integers with some weird ahh code
+    const a = Math.random()*n|0
+    const b = (a + 1 + Math.random()*(n-1)|0) % n
+
     // /ring/l-m.dev/iframe
     // /ring/l-m.dev/iframe?theme=dark
     const h = html`
@@ -133,18 +146,23 @@ function ring_iframe(r, host) {
             @media (max-width: 24em) {
                 body { padding: 6px; font-size: .875rem; }
             }
+            nav img {
+                height: 1.5em;
+                width: auto;
+                vertical-align: middle;
+            }
         </style>
         <script>
             if (new URLSearchParams(location.search).get('theme') === 'dark')
                 document.documentElement.dataset.theme = 'dark';
         </script>
         <nav>
-            <a rel="prev" href="//mrrrp.cat/ring/${host}/prev" target="_top">${'<< prev'}</a>
+            <a rel="prev" href="//mrrrp.cat/ring/${host}/prev" target="_top">${'<< prev'}</a> <img src="//mrrrp.cat/media/cat128/${cate_images[a]}" alt="cute cat">
             <span class="sep" aria-hidden="true">|</span>
             <a href="//mrrrp.cat/ring" target="_top">mrrrp.cat webring</a>
             (<a href="//mrrrp.cat/ring/random" target="_top">random</a>)
             <span class="sep" aria-hidden="true">|</span>
-            <a rel="next" href="//mrrrp.cat/ring/${host}/next" target="_top">${'next >>'}</a>
+            <img src="//mrrrp.cat/media/cat128/${cate_images[b]}" alt="cute cat"> <a rel="next" href="//mrrrp.cat/ring/${host}/next" target="_top">${'next >>'}</a>
         </nav>
     `
 
