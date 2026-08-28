@@ -120,6 +120,10 @@ function ring_iframe(r, host) {
     const a = Math.random()*n|0
     const b = (a + 1 + Math.random()*(n-1)|0) % n
 
+    // TODO(liam): DRY
+    const idx_next = (webring.indexOf(host) + 1) % webring.length
+    const idx_prev = (webring.indexOf(host) - 1 + webring.length) % webring.length
+
     // /ring/l-m.dev/iframe
     // /ring/l-m.dev/iframe?theme=dark
     const h = html`
@@ -157,12 +161,12 @@ function ring_iframe(r, host) {
                 document.documentElement.dataset.theme = 'dark';
         </script>
         <nav>
-            <a rel="prev" href="//mrrrp.cat/ring/${host}/prev" target="_top">${'<< prev'}</a> <img src="//mrrrp.cat/media/cat128/${cate_images[a]}" alt="cute cat">
+            <a rel="prev" href="//mrrrp.cat/ring/${host}/prev" target="_top">${`<< ${webring[idx_prev]}`}</a> <img src="//mrrrp.cat/media/cat128/${cate_images[a]}" alt="cute cat">
             <span class="sep" aria-hidden="true">|</span>
             <a href="//mrrrp.cat/ring" target="_top">mrrrp.cat webring</a>
             (<a href="//mrrrp.cat/ring/random" target="_top">random</a>)
             <span class="sep" aria-hidden="true">|</span>
-            <img src="//mrrrp.cat/media/cat128/${cate_images[b]}" alt="cute cat"> <a rel="next" href="//mrrrp.cat/ring/${host}/next" target="_top">${'next >>'}</a>
+            <img src="//mrrrp.cat/media/cat128/${cate_images[b]}" alt="cute cat"> <a rel="next" href="//mrrrp.cat/ring/${host}/next" target="_top">${`${webring[idx_next]} >>`}</a>
         </nav>
     `
 
