@@ -21,7 +21,7 @@
     background: #fff8d8;
     border: 2px solid #111;
     border-radius: 4px;
-    font: bold 13px "Comic Sans MS", "Comic Sans", cursive;
+    font: bold 13px "Comic Sans MS", "Comic Sans", sans-serif;
     line-height: 1.1;
     transform: rotate(var(--rotation));
     box-shadow: 3px 3px 0 #111;
@@ -47,7 +47,7 @@
     width: fit-content;
     background: #fff8d8;
     border: 2px solid #111;
-    font: 13px "Comic Sans MS", "Comic Sans", cursive;
+    font: 13px "Comic Sans MS", "Comic Sans", sans-serif;
 }
 
 #commentInput textarea {

@@ -86,7 +86,7 @@ function ring_invite(r, host) {
             min-height: 100vh;
             background: #111;
             color: white;
-            font-family: "Comic Sans MS", "Comic Sans", cursive;
+            font-family: "Comic Sans MS", "Comic Sans", sans-serif;
             /* justify-content: center; */
         }
     </style>
@@ -220,7 +220,7 @@ function ring_iframe(r, host) {
                 align-items: center;
                 justify-content: center;
                 text-align: center;
-                font: 1rem/1.5 "Comic Sans MS", "Comic Sans", cursive;
+                font: 1rem/1.5 "Comic Sans MS", "Comic Sans", sans-serif;
                 color: #111;
             }
             a { color: #0000EE; white-space: nowrap; }
