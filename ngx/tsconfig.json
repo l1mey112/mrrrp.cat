@@ -4,9 +4,10 @@
     "lib": ["es2021"],
     "types": [],
     "noEmit": true,
+    // https://github.com/sandersn/manual/blob/master/Strict-JSDoc.md
     "strict": true,
     "allowJs": true,
     "checkJs": true
   },
-  "include": ["njs.d.ts", "../*.js"]
+  "include": ["./vendor/*.d.ts", "./vendor/*.js", "*.js"]
 }

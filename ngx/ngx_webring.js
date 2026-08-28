@@ -1,16 +1,18 @@
 // https://nginx.org/en/docs/njs
 // https://github.com/nginx/njs-examples
+// https://github.com/sandersn/manual/blob/master/Strict-JSDoc.md
 /// <reference path="vendor/njs.d.ts" />
 
 import fs from 'fs'
 import { html, md } from './vendor/html.js'
 /*
-
-https://mrrrp.cat/ring/l-m.dev/invite
-https://mrrrp.cat/ring/l-m.dev/next
-https://mrrrp.cat/ring/l-m.dev/prev
-https://mrrrp.cat/ring/l-m.dev/iframe
-
+- /ring
+- /ring/random
+- /ring/list
+- /ring/example.com/invite
+- /ring/example.com/iframe
+- /ring/example.com/next
+- /ring/example.com/prev
 */
 
 const cate_images = fs.readdirSync('media/cat128').filter(f => f.endsWith('.png'));

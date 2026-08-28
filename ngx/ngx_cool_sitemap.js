@@ -1,3 +1,6 @@
+// https://nginx.org/en/docs/njs
+// https://github.com/nginx/njs-examples
+// https://github.com/sandersn/manual/blob/master/Strict-JSDoc.md
 /// <reference path="vendor/njs.d.ts" />
 /*
 we can do some cool thing to repurpose the sitemap.xml to add a cool

@@ -1,3 +1,6 @@
+// https://nginx.org/en/docs/njs
+// https://github.com/nginx/njs-examples
+// https://github.com/sandersn/manual/blob/master/Strict-JSDoc.md
 /// <reference path="vendor/njs.d.ts" />
 
 import fs from 'fs';
@@ -5,6 +8,9 @@ import fs from 'fs';
 // NOTE: readFileSync performs a plain open() and reads from the startup cwd (no ngx config)
 const commentsFile = 'data/comments.json';
 
+/**
+ * @param {NginxHTTPRequest} r
+ */
 async function readComments(r) {
     try {
         const contents = await fs.promises.readFile(commentsFile, 'utf8');
@@ -21,12 +27,15 @@ async function readComments(r) {
     }
 }
 
+/**
+ * @param {NginxHTTPRequest} r
+ * @param {object[]} comments
+ */
 async function writeComments(r, comments) {
     try {
         await fs.promises.writeFile(
             commentsFile,
             JSON.stringify(comments, null, 2),
-            'utf8'
         );
 
         return true;

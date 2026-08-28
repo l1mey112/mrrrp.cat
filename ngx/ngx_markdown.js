@@ -1,5 +1,6 @@
 // https://nginx.org/en/docs/njs
 // https://github.com/nginx/njs-examples
+// https://github.com/sandersn/manual/blob/master/Strict-JSDoc.md
 /// <reference path="vendor/njs.d.ts" />
 
 import fs from 'fs'
