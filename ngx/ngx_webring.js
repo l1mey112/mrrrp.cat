@@ -173,7 +173,7 @@ function ring_iframe(r, host) {
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <style>
-            html, body { height: 100%; margin: 0; background: transparent; color-scheme: light dark; overflow: hidden; }
+            html, body { height: 100%; margin: 0; background: transparent; overflow: hidden; }
             body {
                 box-sizing: border-box;
                 padding: 10px;
@@ -187,14 +187,6 @@ function ring_iframe(r, host) {
             a { color: #0000EE; white-space: nowrap; }
             a:hover, a:focus { color: #000; }
             .sep { opacity: .5; padding: 0 .15em; }
-            @media (prefers-color-scheme: dark) {
-                body { color: #eee; }
-                a { color: #5aa2ff; }
-                a:hover, a:focus { color: #fff; }
-            }
-            [data-theme="light"] { color: #111; }
-            [data-theme="light"] a { color: #0000EE; }
-            [data-theme="light"] a:hover, [data-theme="light"] a:focus { color: #000; }
             [data-theme="dark"] { color: #eee; }
             [data-theme="dark"] a { color: #5aa2ff; }
             [data-theme="dark"] a:hover, [data-theme="dark"] a:focus { color: #fff; }
