@@ -20,6 +20,7 @@ const webring = [
     'violetronics.dev',
     'unemployed.foo',
     'jstnc.dev',
+    'isobel.zip'
     // your site here!
 ]
 
@@ -70,7 +71,7 @@ function ring(r) {
  */
 function ring_invite(r, host) {
     // media/webring_preview.png
-    
+
     const h = md`
 <!DOCTYPE html>
 <html lang="en">
