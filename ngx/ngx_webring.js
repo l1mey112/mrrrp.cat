@@ -187,7 +187,7 @@ function ring_iframe(r, host) {
             a { color: #0000EE; white-space: nowrap; }
             a:hover, a:focus { color: #000; }
             .sep { opacity: .5; padding: 0 .15em; }
-            [data-theme="dark"] { color: #eee; color-scheme: dark; }
+            [data-theme="dark"] { color: #eee; }
             [data-theme="dark"] a { color: #5aa2ff; }
             [data-theme="dark"] a:hover, [data-theme="dark"] a:focus { color: #fff; }
             @media (max-width: 24em) {
