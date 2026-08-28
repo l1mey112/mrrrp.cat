@@ -1,0 +1,15 @@
+#!/bin/sh
+set -e
+
+size="${SIZE:-128}"
+fps="${FPS:-15}"
+palette="$(mktemp --suffix=.png)"
+trap 'rm -f "$palette"' EXIT
+
+in="$1"
+out="${2:-${in%.*}.gif}"
+
+fit="scale=${size}:${size}:force_original_aspect_ratio=decrease,pad=${size}:${size}:-1:-1:color=#00000000"
+
+ffmpeg -i "$in" -vf "fps=${fps},${fit},palettegen=stats_mode=diff:reserve_transparent=1" -update 1 -y "$palette"
+ffmpeg -i "$in" -i "$palette" -lavfi "fps=${fps},${fit} [x]; [x][1:v] paletteuse=dither=bayer:bayer_scale=5:diff_mode=rectangle:alpha_threshold=128" -gifflags -offsetting -y "$out"
