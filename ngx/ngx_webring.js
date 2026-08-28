@@ -17,7 +17,7 @@ const cate_images = fs.readdirSync('media/cat128').filter(f => f.endsWith('.png'
 
 const webring = [
     'l-m.dev',
-    'violetronics.dev',
+    //'violetronics.dev',
     'unemployed.foo',
     'jstnc.dev',
     'isobel.zip'
