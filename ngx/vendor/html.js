@@ -29,7 +29,7 @@ also supports returning markdown with
 
 import { marked } from './marked.esm.js'
 
-class Raw {
+export class Raw {
     /** @param {string} s  */
     constructor(s) { this.s = s; }
     toString() { return this.s; }
@@ -68,12 +68,4 @@ export function html(strings, ...vals) {
  */
 export function md(strings, ...vals) {
     return new Raw(marked.parse(html(strings, ...vals).toString()))
-}
-
-/**
- * @param {string} s 
- * @returns {Raw}
- */
-export function raw(s) {
-    return new Raw(s)
 }

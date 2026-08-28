@@ -28,12 +28,15 @@ const webring = [
 function ring(r) {
     // /ring
     // /ring/random
+    // /ring/list
     switch (r.uri) {
     case '/ring':
         return r.return(302, '//mrrrp.cat/')
     case '/ring/random':
         const idx = Math.floor(Math.random()*webring.length)
         return r.return(302, `//${webring[idx]}/`)
+    case '/ring/list':
+        return fun_ring_list(r)
     }
 
     // /ring/l-m.dev/{next,prev,invite,iframe}
@@ -275,6 +278,66 @@ function parse_ring(uri) {
         host: m[1],
         cmd: /** @type {'invite' | 'next' | 'prev' | 'iframe'} */ (m[2] ?? "")
     }
+}
+
+/**
+ * @template T
+ * @param {T[]} arr
+ */
+function new_array_shuffled(arr) {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+}
+
+const webring_random = new_array_shuffled(webring)
+const cate_images_random = new_array_shuffled(cate_images)
+
+/**
+ * @param {NginxHTTPRequest} r
+ */
+function fun_ring_list(r) {
+    const htmls = []
+
+    let cate = 0
+    for (let i = 0; i < webring_random.length; i++) {
+        cate = (cate + 1) % cate_images_random.length
+        
+        htmls.push(html`
+            <li>
+            <img src="/media/cat128/${cate_images_random[cate]}" alt="">
+            <a href="//${webring_random[i]}/">${webring_random[i]}</a>
+            </li>
+        `)
+    }
+    const h = html`
+        <style>
+            .chips {
+                display: flex;
+                flex-wrap: wrap;
+                gap: .75rem;
+                padding: 0;
+            }
+            .chips li {
+                display: flex;
+                align-items: center;
+                gap: .5rem;
+                margin: 0;
+            }
+            .chips img {
+                width: 64px;
+                height: 64px;
+                object-fit: cover;
+            }
+        </style>
+        <ul class="chips">${htmls}</ul>
+    `
+
+    r.headersOut['Content-Type'] = 'text/html'
+    r.return(200, h.toString())
 }
 
 export default { ring };
