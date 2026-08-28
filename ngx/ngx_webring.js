@@ -116,6 +116,15 @@ we're going to invite you (${host}) to mrrrp.cat webring
     style="display:block;width:100%;height:56px;margin:0 auto;border:0"></iframe>
 \`\`\`
 
+<details>
+<summary>if the text colours aren't nice enough please try <code>?theme=dark</code> !!</summary>
+
+<pre><code>${`<iframe src="https://mrrrp.cat/ring/${host}/iframe"
+    title="mrrrp.cat webring"
+    loading="lazy"
+    style="display:block;width:100%;height:56px;margin:0 auto;border:0"></iframe>`}</code></pre>
+</details>
+
 # final step!
 
 we need to get you onto the webring array inside the code so we can route to you
@@ -177,6 +186,7 @@ function ring_iframe(r, host) {
             @media (max-width: 24em) {
                 body { padding: 6px; font-size: .875rem; }
             }
+            nav { white-space: nowrap; }
             nav img {
                 height: 1.5em;
                 width: auto;
