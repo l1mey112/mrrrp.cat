@@ -20,5 +20,8 @@ web:
 	@[ -n "$(NJS)" ] || { printf 'no ngx_http_js_module.so for nginx %s\n' "$(VER)"; exit 1; }
 	nginx -p $(CURDIR)/.ngx -c nginx.conf -e /dev/stdout -g 'load_module $(NJS); daemon off;'
 
+weblivereload:
+	air
+
 update_repology_data:
 	ruby .ngx/vendor/update_repology_data.rb

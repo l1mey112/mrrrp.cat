@@ -1,0 +1,21 @@
+root = "."
+tmp_dir = "tmp"
+
+[build]
+  cmd = "true"
+  full_bin = "make web"
+  include_ext = ["html", "css", "js", "svg", "xml", "json", "conf", "md", "rb"]
+  include_dir = [".", "css", "media", "data", ".ngx"]
+  exclude_dir = ["tmp"]
+  delay = 100
+  stop_on_error = false
+  send_interrupt = true
+  kill_delay = "500ms"
+
+[proxy]
+  enabled = true
+  proxy_port = 8081
+  app_port = 8080
+
+[misc]
+  clean_on_exit = true
