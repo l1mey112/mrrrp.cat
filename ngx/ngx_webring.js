@@ -22,9 +22,10 @@ const webring = [
     //'violetronics.dev',
     'unemployed.foo',
     'jstnc.dev',
-    'isobel.zip'
-    //'odpay.net'
-    //'logykk.stream'
+    'isobel.zip',
+    //'odpay.net',
+    //'logykk.stream',
+    'zopolis4.github.io',
     // your site here!
 ]
 
