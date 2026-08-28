@@ -19,6 +19,7 @@ const webring = [
     'l-m.dev',
     'violetronics.dev',
     'unemployed.foo',
+    'jstnc.dev',
     // your site here!
 ]
 
