@@ -2,30 +2,56 @@
 // https://github.com/nginx/njs-examples
 /// <reference path="vendor/njs.d.ts" />
 
-import { md } from './vendor/html.js'
+import { html, md } from './vendor/html.js'
 /*
 
-https://mrrrp.cat/ring/l-m.dev
+https://mrrrp.cat/ring/l-m.dev/invite
 https://mrrrp.cat/ring/l-m.dev/next
 https://mrrrp.cat/ring/l-m.dev/prev
-https://mrrrp.cat/ring/l-m.dev/embed
+https://mrrrp.cat/ring/l-m.dev/iframe
 
 */
 
+const webring = [
+    'l-m.dev',
+    'violetronics.dev',
+]
+
 /** @param {NginxHTTPRequest} r */
 function ring(r) {
+    switch (r.uri) {
+    case '/ring':
+        return r.return(302, '//mrrrp.cat/')
+    case '/ring/random':
+        const idx = Math.floor(Math.random()*webring.length)
+        return r.return(302, `//${webring[idx]}/`)
+    }
+
     const res = parse_ring(r.uri)
     if (!res) {
         r.return(404)
         return
     }
 
-    switch (res.cmd) {
-    case "": ring_invite(r, res.host); break
-    case "next": r.return(501); break
-    case "prev": r.return(501); break
-    case "embed": r.return(501); break
+    if (res.cmd == 'invite') {
+        return ring_invite(r, res.host)
     }
+
+    let idx = webring.indexOf(res.host)
+    if (idx === -1) {
+        r.return(404)
+        return
+    }
+
+    if (res.cmd == 'iframe') {
+        return ring_iframe(r, res.host)
+    }
+
+    switch (res.cmd) {
+    case "next": idx = (idx + 1) % webring.length; break
+    case "prev": idx = (idx - 1) % webring.length; break
+    }
+    r.return(302, '//' + webring[idx] + '/')
 }
 
 /**
@@ -43,7 +69,7 @@ function ring_invite(r, host) {
     <meta property="og:type" content="website">
     <meta property="og:locale" content="en_AU">
     <meta property="og:title" content="invite ${host} to mrrrp.cat webring">
-    <meta property="og:description" content="click in here to get all the tools you need to set up!">
+    <meta property="og:description" content="${host} -> click to get all the tools you need to set up!">
 </head>
 <body>
 
@@ -58,7 +84,10 @@ we're going to invite you (${host}) to mrrrp.cat webring
 2. **option 2.** please use this iframe
 
 \`\`\`
-<iframe style="width: 90%; height: 3rem; border: none;" src="https://mrrrp.cat/ring/${host}/embed"></iframe>
+<iframe src="https://mrrrp.cat/ring/${host}/iframe"
+    title="mrrrp.cat webring"
+    loading="lazy"
+    style="display:block;width:100%;height:56px;margin:0 auto;border:0"></iframe>
 \`\`\`
 
 </body>
@@ -69,17 +98,58 @@ we're going to invite you (${host}) to mrrrp.cat webring
     r.return(200, h.toString())
 }
 
-const RING_RE = /^\/ring\/([a-z0-9-]+(?:\.[a-z0-9-]+)+)(?:\/(next|prev|embed))?\/?$/i;
+/**
+ * @param {NginxHTTPRequest} r
+ * @param {string} host
+ */
+function ring_iframe(r, host) {
+    // /ring/l-m.dev/iframe
+    // /ring/l-m.dev/iframe?theme=dark
+    const h = html`
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            html, body { height: 100%; margin: 0; background: transparent; }
+            body {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                font: 1rem/1.5 "Comic Sans MS", "Comic Sans", cursive;
+            }
+            nav { padding: 10px; }
+            a { white-space: nowrap; }
+            [data-theme="dark"] { color: #eee; }
+            [data-theme="dark"] a { color: #5aa2ff; }
+            [data-theme="dark"] a:visited { color: #c9a8f0; }
+        </style>
+        <script>
+            if (new URLSearchParams(location.search).get('theme') === 'dark')
+                document.documentElement.dataset.theme = 'dark';
+        </script>
+        <nav>
+            <a rel="prev" href="//mrrrp.cat/ring/${host}/prev" target="_top">${'<< prev'}</a> |
+            <a href="//mrrrp.cat/ring" target="_blank" rel="noopener">mrrrp.cat webring</a>
+            (<a href="//mrrrp.cat/ring/random" target="_top">random</a>) |
+            <a rel="next" href="//mrrrp.cat/ring/${host}/next" target="_top">${'next >>'}</a>
+        </nav>
+    `
+
+    r.headersOut['Content-Type'] = 'text/html'
+    r.return(200, h.toString())
+}
+
+const RING_RE = /^\/ring\/([a-z0-9-]+(?:\.[a-z0-9-]+)+)(?:\/(invite|next|prev|iframe))\/?$/i;
 
 /**
  * @param {string} uri
-*/
+ */
 function parse_ring(uri) {
     const m = RING_RE.exec(uri)
     if (!m) return null
     return {
         host: m[1],
-        cmd: /** @type {'' | 'next' | 'prev' | 'embed'} */ (m[2] ?? "")
+        cmd: /** @type {'invite' | 'next' | 'prev' | 'iframe'} */ (m[2] ?? "")
     }
 }
 
