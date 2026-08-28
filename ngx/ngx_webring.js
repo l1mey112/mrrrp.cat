@@ -157,7 +157,7 @@ function ring_iframe(r, host) {
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <style>
-            html, body { height: 100%; margin: 0; background: transparent; }
+            html, body { height: 100%; margin: 0; background: transparent; color-scheme: light dark; }
             body {
                 box-sizing: border-box;
                 padding: 10px;
