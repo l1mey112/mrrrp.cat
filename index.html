@@ -294,6 +294,72 @@
 
     <img src="/media/IMG_4205.png" alt="wisdom" width="100ch">
     <img src="/media/IMG_4206.png" alt="wisdom" width="100ch">
+    <script>
+// firefox devtools magic
+document.addEventListener("DOMContentLoaded", () => {
+  setTimeout(() => {
+    // firefox conserves resources so it wont get() yet
+    console.log("\n".repeat(10000));
+
+    const error = new Error();
+
+    Object.defineProperties(error, {
+      message: {
+        get() {
+          document.body.innerHTML = '';
+          document.head.innerHTML = '';
+
+          Object.assign(document.body.style, {
+            backgroundColor: '#13151a',
+            color: '#fff',
+            fontFamily: 'monospace',
+            fontSize: '2rem',
+            overflow: 'hidden'
+          });
+
+          const img = document.createElement('img');
+          img.src = 'https://mrrrp.cat/media/happy-cat.gif';
+          img.style.position = 'absolute';
+          document.body.appendChild(img);
+
+          setTimeout(() => {
+            img.style.width = '100%';
+            img.style.height = '100%';
+
+
+            setTimeout(() => {
+              const text = document.createElement('p');
+              text.innerText = 'dude wtf';
+              Object.assign(text.style, {
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                color: '#000',
+                fontFamily: 'serif',
+                fontSize: '50px'
+              });
+              document.body.appendChild(text);
+            }, 200);
+          }, 100);
+        }
+      },
+
+      toString: {
+        value() {
+          if (new Error().stack.includes('toString@')) {
+            alert('lol hi');
+          }
+          return String(error);
+        }
+      }
+    });
+
+    console.log(error);
+
+  }, 30);
+});
+    </script>
 </body>
 
 </html>
