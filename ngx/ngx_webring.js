@@ -28,6 +28,7 @@ const webring = [
     'zopolis4.github.io',
     'evan.lat',
     'blog.suwuako.com',
+    'blueberrywren.dev',
     // your site here!
 ]
 
