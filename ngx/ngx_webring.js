@@ -26,7 +26,8 @@ const webring = [
     'odpay.net',
     'logykk.stream',
     'zopolis4.github.io',
-    "evan.lat"
+    'evan.lat',
+    'blog.suwuako.com',
     // your site here!
 ]
 
