@@ -24,7 +24,7 @@ const webring = [
     'jstnc.dev',
     'isobel.zip',
     'odpay.net',
-    //'logykk.stream',
+    'logykk.stream',
     'zopolis4.github.io',
     // your site here!
 ]
