@@ -18,11 +18,66 @@
 
         body {
             padding: 10px;
-            min-height: 100vh;
+            width: calc(100% - 40px);
+            max-width: 1200px;
+            margin: 20px auto;
+            min-height: calc(100vh - 40px);
             background: #111;
             color: white;
             font-family: "Comic Sans MS", "Comic Sans", sans-serif;
+            display: grid;
+            grid-template-columns: 1fr minmax(0, 800px) 1fr;
+            gap: 20px;
             /* justify-content: center; */
+        }
+
+        aside {
+            grid-column: 1;
+            justify-self: end;
+            width: 170px;
+            padding: 12px;
+            box-sizing: border-box;
+            border: 1px solid white;
+            background: #111 url("/media/bg.jpg") center / 280px auto repeat;
+            box-shadow: 4px 4px 0 #111;
+        }
+
+        aside h2 {
+            margin-top: 0;
+        }
+
+        main {
+            grid-column: 2;
+            min-width: 0;
+        }
+
+        aside img {
+            display: block;
+            max-width: 100%;
+            margin-bottom: 12px;
+        }
+
+        aside nav a {
+            display: block;
+            margin: 6px 0;
+            padding: 4px 6px;
+            background: #111;
+        }
+
+        @media screen and (max-width: 1100px) {
+            body {
+                display: block;
+            }
+
+            aside {
+                width: 100%;
+                margin-bottom: 16px;
+            }
+
+            aside nav a {
+                display: inline-block;
+                margin-right: 12px;
+            }
         }
 
 
@@ -184,6 +239,18 @@
 </head>
 
 <body>
+    <aside>
+        <h2>mrrrp!</h2>
+        <img src="/media/happy-cat.gif" alt="hapcat">
+        <nav>
+            <a href="/">home</a>
+            <a href="/mmrow.html">meow</a>
+            <a href="/sitemap.xml">sitemap</a>
+            <a href="https://maxbittker.github.io/warms/">warms</a>
+        </nav>
+    </aside>
+
+    <main>
     <script>
         const texts = ["mrrrp", "meow", "miau", "☆", "boop", "mrrow", "purr", "hiss", "roar", "mrr", "fucking dies"];
 
@@ -221,7 +288,7 @@
         };
     </script>
 
-    <h1>mrrrp</h1>
+    <h1><img src="/media/header.png" alt="mrrrp" style="display: block; max-width: 100%; height: auto; margin: 0 auto; transform: translateX(6%)"></h1>
     <img src="/media/happy-cat.gif" alt="a happy cat">
 
     <section>
@@ -294,6 +361,7 @@
 
     <img src="/media/IMG_4205.png" alt="wisdom" width="100ch">
     <img src="/media/IMG_4206.png" alt="wisdom" width="100ch">
+    </main>
     <script>
 // firefox devtools magic
 document.addEventListener("DOMContentLoaded", () => {
