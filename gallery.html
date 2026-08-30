@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>gallery</title>
+    <style>
+        body {
+            margin: 20px auto;
+            max-width: 900px;
+            background: #111;
+            color: white;
+            font-family: "Comic Sans MS", "Comic Sans", sans-serif;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 12px;
+            align-items: start;
+        }
+
+        .gallery img {
+            width: 100%;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <p><a href="/">back to mrrrp.cat</a></p>
+    <h1>gallery</h1>
+    <div class="gallery">
+        <!--# include virtual="/gallery" -->
+    </div>
+</body>
+</html>
