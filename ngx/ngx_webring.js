@@ -5,6 +5,7 @@
 
 import fs from 'fs'
 import { html, md } from './vendor/html.js'
+import { new_array_shuffled } from './vendor/util.js'
 /*
 - /ring
 - /ring/random
@@ -286,19 +287,6 @@ function parse_ring(uri) {
         host: m[1],
         cmd: /** @type {'invite' | 'next' | 'prev' | 'iframe'} */ (m[2] ?? "")
     }
-}
-
-/**
- * @template T
- * @param {T[]} arr
- */
-function new_array_shuffled(arr) {
-    const a = [...arr];
-    for (let i = a.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [a[i], a[j]] = [a[j], a[i]];
-    }
-    return a;
 }
 
 const webring_random = new_array_shuffled(webring)

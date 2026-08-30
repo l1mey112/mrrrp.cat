@@ -56,6 +56,7 @@ function render(r) {
         `)
     }
 
+    r.headersOut['Content-Type'] = 'text/html'
     r.return(200, html`<ul>${htmls}</ul>`.toString())
 }
 
