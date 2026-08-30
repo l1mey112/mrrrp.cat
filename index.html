@@ -25,36 +25,28 @@
             background: #111;
             color: white;
             font-family: "Comic Sans MS", "Comic Sans", sans-serif;
-            display: grid;
-            grid-template-columns: 1fr minmax(0, 800px) 1fr;
-            gap: 20px;
+            display: flex;
+            gap: 24px;
+            align-items: flex-start;
             /* justify-content: center; */
         }
 
         aside {
-            grid-column: 1;
-            justify-self: end;
-            width: 170px;
+            flex: 0 0 180px;
+            align-self: stretch;
             padding: 12px;
             box-sizing: border-box;
-            border: 1px solid white;
+            border: 2px solid white;
             background: #111 url("/media/bg.jpg") center / 280px auto repeat;
-            box-shadow: 4px 4px 0 #111;
         }
 
         aside h2 {
             margin-top: 0;
         }
 
-        main {
-            grid-column: 2;
-            min-width: 0;
-        }
-
         aside img {
             display: block;
             max-width: 100%;
-            margin-bottom: 12px;
         }
 
         aside nav a {
@@ -64,19 +56,20 @@
             background: #111;
         }
 
-        @media screen and (max-width: 1100px) {
+        main {
+            flex: 1;
+            min-width: 0;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 700px) {
             body {
                 display: block;
             }
 
             aside {
-                width: 100%;
                 margin-bottom: 16px;
-            }
-
-            aside nav a {
-                display: inline-block;
-                margin-right: 12px;
             }
         }
 
@@ -248,6 +241,10 @@
             <a href="/sitemap.xml">sitemap</a>
             <a href="https://maxbittker.github.io/warms/">warms</a>
         </nav>
+
+        <div>
+            <a href="https://mrrrp.cat/"><img src="https://mrrrp.cat/mrrrp-88x31.gif" alt="mrrrp.cat" width="88" height="31"></a>
+        </div>
     </aside>
 
     <main>
@@ -288,8 +285,7 @@
         };
     </script>
 
-    <h1><img src="/media/header.png" alt="mrrrp" style="display: block; max-width: 100%; height: auto; margin: 0 auto; transform: translateX(6%)"></h1>
-    <img src="/media/happy-cat.gif" alt="a happy cat">
+    <h1><img src="/media/header.png" alt="mrrrp" style="display: block; max-width: 100%; margin: 0 auto"></h1>
 
     <section>
         <!--# include virtual="/ring/list" -->
@@ -314,7 +310,6 @@
         <!--# include virtual="/sitemap" -->
     </section>
 
-    <h1>webring support soon</h1>
     <h2><a href="mmrow.html">meow</a></h2>
     <h2><a href="https://maxbittker.github.io/warms/">warms (EXTERNAL SITE)</a></h2>
 
