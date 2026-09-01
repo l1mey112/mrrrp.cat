@@ -9,5 +9,5 @@
     "allowJs": true,
     "checkJs": true
   },
-  "include": ["./vendor/*.d.ts", "./vendor/*.js", "*.js"]
+  "include": ["./vendor/*.d.ts", "./vendor/*.js", "**/*.js"]
 }

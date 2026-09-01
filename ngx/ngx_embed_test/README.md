@@ -41,7 +41,7 @@ there are three different modes based on
 
 - opengraph
 - opengraph + oembed
-- opengraph + activitypub faking
+- opengraph - og:image + activitypub faking
 
 important to know, either oembed **or** activitypub is used
 
@@ -85,7 +85,7 @@ note that the "title" is not read from, it's inert. you get the title from the o
 
 **important:** why would you **want** oembed? well, just for that strip at the top where you can put whatever you want
 
-## application/activity+json (+ opengraph)
+## application/activity+json (+ opengraph - og:image)
 
 ![](fxtwitter_activitypub.png)
 
@@ -96,6 +96,13 @@ couple things
 - in the JSON the `.url` and `.account.url` are the same, it is this top link here ![](fxtwitter_activitypub_url_line.png)
 - the bottom "FxTwitter" line comes about from editing the site name ![](fxtwitter_activitypub_og_site_name.png)
 
+**note!:** in this setup, when FxTwitter dtcs **DiscordBot** it does NOT send `og:image`. **list of things that fx does NOT send:**
+
+```
+og:image                        |  twitter:image
+og:image:width og:image:height  |  twitter:image:width twitter:image:height
+og:image:alt                    |  twitter:image:alt
+```
 
 **important:** there are a lot of fields in the JSON which are just splatted with their default/placeholder values (a lot of null, false, etc). we can't omit them otherwise discord will just fail to render. **best to read source code**
 
