@@ -51,7 +51,7 @@ function post_123123(r) {
         <link rel="canonical" href="https://mrrrp.cat/">
         <meta property="og:type" content="website">
         <meta property="og:url" content="https://mrrrp.cat/">
-        <meta property="og:site_name" content="mrrrp.cat">
+        <meta property="og:site_name" content="FxTwitter">
         <meta property="og:locale" content="en_AU">
 
         ${!is_discord ? html`
