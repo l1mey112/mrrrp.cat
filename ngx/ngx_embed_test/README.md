@@ -119,6 +119,7 @@ og:image:alt                    |  twitter:image:alt
 <!-- disallowed (examples) -->
 <s> <strike> <pre> <h1> <p> <span> <div>
 <small> <mark> <sub> <sup>
+<ins>ins</ins> <abbr title="x">abbr</abbr> <kbd>kbd</kbd> <samp>samp</samp> <q>q</q>
 <!-- + all attributes except href -->
 ```
 

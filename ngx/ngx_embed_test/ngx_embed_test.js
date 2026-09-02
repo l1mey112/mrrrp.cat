@@ -84,10 +84,7 @@ function post_123123_status(r) {
     const post_content = html`
         mrrrp.cat's <b><del>quote</del> <ins>mrrrp</ins> of the day</b>:
         <blockquote>to mrrrp or not to mrrrp, that is the question</blockquote>
-        <br><br>
         <b>💬 999999.9K&ensp;🔁 999999.9K&ensp;❤️ 999999.9K&ensp;</b>
-        <br><br>
-        <ins>ins</ins> <abbr title="x">abbr</abbr> <kbd>kbd</kbd> <samp>samp</samp> <q>q</q> cite <hr> <li>orphan-li</li>
     `
 
     const o = {
