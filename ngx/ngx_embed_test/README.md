@@ -98,6 +98,8 @@ couple things
 
 **note!:** in this setup, when FxTwitter dtcs **DiscordBot** it does NOT send `og:image`. **list of things that fx does NOT send:**
 
+- they have specific reasons for this (something to do with mosaics), you can still include them however
+
 ```
 og:image                        |  twitter:image
 og:image:width og:image:height  |  twitter:image:width twitter:image:height
@@ -105,6 +107,19 @@ og:image:alt                    |  twitter:image:alt
 ```
 
 **important:** there are a lot of fields in the JSON which are just splatted with their default/placeholder values (a lot of null, false, etc). we can't omit them otherwise discord will just fail to render. **best to read source code**
+
+```html
+<!-- allowed -->
+<b>     <strong>  <i>  <em>  <u>
+<code>  <a href>  <blockquote>
+<br>    <ul>      <li>
+
+
+<!-- disallowed (examples) -->
+<s> <pre> <h1> <p> <span>
+<!-- + all attributes except href -->
+<!-- block tags like <div> are stripped but still break lines -->
+```
 
 <details>
 <summary>see the JSON for the activity (see "getting the payload in")</summary>
@@ -192,7 +207,7 @@ as mentioned before, this tag inside the head signals to discord that this is a 
     rel='alternate' type='application/activity+json'>
 ```
 
-this URL is actually fake, it doesn't lead anywhere and hits nothing so the fxtwitter handler 302s you to their github in their source code. what is **is** used for is a handler at "/api/v1/statuses" which discord hits by taking the long id and putting it on the end of that
+this URL is actually fake[^1], it doesn't lead anywhere and hits nothing so the fxtwitter handler 302s you to their github in their source code. what is **is** used for is a handler at "/api/v1/statuses" which discord hits by taking the long id and putting it on the end of that
 
 - the handle in "/users/Handle/statuses/...." is purely cosmetic. the link prefix is just activitypub/mastodon specific stuff
 - the id at the end is the only thing that survives, which fxtwitter uses snowcode to embed `{"i":"<id>"}` into digits for it
@@ -213,6 +228,19 @@ curl https://fxtwitter.com/api/v1/statuses/6608666766565855565652565456535653565
 ```
 
 this is the JSON that is actually served and is important
+
+[^1]: Discord actually requests this when `/api/v1/statuses` 404s, purpose unclear. probably mastodon thing see example below:
+
+<details>
+<summary>actual chain of requests</summary>
+
+```
+"GET / HTTP/1.1" 200 4186 "-" "Mozilla/5.0 (compatible; Discordbot/2.0; +https://discordapp.com)"
+"GET /api/v1/statuses/123123 HTTP/1.1" 404 159 "-" "Mozilla/5.0 (compatible; Discordbot/2.0; +https://discordapp.com)"
+"GET /users/UltimateMrrrp/statuses/123123 HTTP/1.1" 404 159 "-" "Mozilla/5.0 (compatible; Discordbot/2.0; +https://discordapp.com)"
+```
+
+</details>
 
 # references
 

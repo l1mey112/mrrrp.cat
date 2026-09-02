@@ -130,7 +130,7 @@ function post_123123_status(r) {
             "id": "123123",
             "display_name": "Mrrrp.cat test",
             "username": "UltimateMrrrp",
-            "acct": "UltimateMrrrp",
+            "acct": "UltimateMrrrp@example.com",
             "url": "https://mrrrp.cat/",
             "uri": "https://mrrrp.cat/",
             "created_at": "2026-08-24T00:28:43.000Z",
