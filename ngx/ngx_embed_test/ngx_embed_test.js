@@ -48,9 +48,9 @@ function post_123123(r) {
         <meta property="og:title" content="mrrrp.cat's awesome website"> */
     
     const h = html`
-        <link rel="canonical" href="https://mrrrp.cat/">
+        <link rel="canonical" href="https://x.com/Interior/status/463440424141459456">
         <meta property="og:type" content="website">
-        <meta property="og:url" content="https://mrrrp.cat/">
+        <meta property="og:url" content="https://x.com/Interior/status/463440424141459456">
         <meta property="og:site_name" content="FxTwitter">
         <meta property="og:locale" content="en_AU">
 
