@@ -43,6 +43,9 @@ function post_123123(r) {
     const is_discord = (r.headersIn['User-Agent'] || '').includes('Discordbot')
     // false : opengraph
     // true  : opengraph - og:image + activitypub faking
+
+    /* <meta property="twitter:title" content="mrrrp.cat's awesome website">
+        <meta property="og:title" content="mrrrp.cat's awesome website"> */
     
     const h = html`
         <link rel="canonical" href="https://mrrrp.cat/">
@@ -56,8 +59,7 @@ function post_123123(r) {
             <meta name="twitter:card" content="summary_large_image">
             <meta name="twitter:image" content="https://mrrrp.cat/media/happy-cat.gif">` : ''}
 
-        <meta property="twitter:title" content="mrrrp.cat's awesome website">
-        <meta property="og:title" content="mrrrp.cat's awesome website">
+        
         <meta property="og:description" content="mrrrrrrrrrrrrpppp">
         <meta property="theme-color" content="#edc6b5"/>
 
@@ -131,8 +133,8 @@ function post_123123_status(r) {
             "display_name": "Mrrrp.cat test",
             "username": "UltimateMrrrp",
             "acct": "UltimateMrrrp",
-            "url": "https://x.com/whatever",
-            "uri": "https://x.com/whatever",
+            "url": "https://mrrrp.cat/",
+            "uri": "https://mrrrp.cat/",
             "created_at": "2026-08-24T00:28:43.000Z",
             "locked": false,
             "bot": false,
