@@ -112,13 +112,18 @@ og:image:alt                    |  twitter:image:alt
 <!-- allowed -->
 <b>     <strong>  <i>  <em>  <u>
 <code>  <a href>  <blockquote>
-<br>    <ul>      <li>
+<br>    <ul>      <ol>  <li>
+<del>   
 
 
 <!-- disallowed (examples) -->
-<pre> <h1> <p> <span>
+<s> <strike> <pre> <h1> <p> <span> <div>
+<small> <mark> <sub> <sup>
 <!-- + all attributes except href -->
 ```
+
+- emojis like `<:hapcat3:1542789996443074570>` do NOT work
+- consecutive `<br>` clamps at 2 blank lines
 
 <details>
 <summary>see the JSON for the activity (see "getting the payload in")</summary>

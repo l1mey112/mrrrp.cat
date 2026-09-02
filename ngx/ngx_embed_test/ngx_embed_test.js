@@ -81,8 +81,14 @@ NOTE(liam): if you ever want to add some metadata, try
 // /api/v1/statuses/123123
 /** @param {NginxHTTPRequest} r */
 function post_123123_status(r) {
-    const post_content =
-`<del>del</del> <strike>strike</strike><br><ol><li>ol-li</li><li>two</li></ol><br><ul><li>outer<ul><li>nested</li></ul></li></ul><br><div>div</div><br><small>small</small> <mark>mark</mark> <sub>sub</sub> <sup>sup</sup><br><span class="spoiler">spoiler-class</span><br><a href="https://example.com" title="hover">a-with-title</a><br><br><br><br>gap4<br><br><br>gap3`
+    const post_content = html`
+        mrrrp.cat's <b><del>quote</del> <ins>mrrrp</ins> of the day</b>:
+        <blockquote>to mrrrp or not to mrrrp, that is the question</blockquote>
+        <br><br>
+        <b>💬 999999.9K&ensp;🔁 999999.9K&ensp;❤️ 999999.9K&ensp;</b>
+        <br><br>
+        <ins>ins</ins> <abbr title="x">abbr</abbr> <kbd>kbd</kbd> <samp>samp</samp> <q>q</q> cite <hr> <li>orphan-li</li>
+    `
 
     const o = {
         "id": "123123",
@@ -94,7 +100,7 @@ function post_123123_status(r) {
         "in_reply_to_id": null,
         "in_reply_to_account_id": null,
         "language": "en",
-        "content": post_content,
+        "content": post_content.toString().replace(/\s*\n\s*/g, ''),
         "spoiler_text": "",
         "visibility": "public",
         "application": {
@@ -123,9 +129,9 @@ function post_123123_status(r) {
         ],
         "account": {
             "id": "123123",
-            "display_name": "Mrrrp.cat test",
-            "username": "UltimateMrrrp",
-            "acct": "UltimateMrrrp",
+            "display_name": "Mrrrp Of The Day",
+            "username": "MOTD",
+            "acct": "MOTD",
             "url": "https://mrrrp.cat/",
             "uri": "https://mrrrp.cat/",
             "created_at": "2026-08-24T00:28:43.000Z",
