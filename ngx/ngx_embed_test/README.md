@@ -116,9 +116,8 @@ og:image:alt                    |  twitter:image:alt
 
 
 <!-- disallowed (examples) -->
-<s> <pre> <h1> <p> <span>
+<pre> <h1> <p> <span>
 <!-- + all attributes except href -->
-<!-- block tags like <div> are stripped but still break lines -->
 ```
 
 <details>
@@ -197,6 +196,30 @@ og:image:alt                    |  twitter:image:alt
 ```
 
 </details>
+
+### information about the TOP LINE
+
+The header line is created entirely from the JSON rendered as `{display_name} (@{acct})` and `og:title` is not important here. If `acct` does not have an @, Discord appends the host of `account.url` to `acct`. 
+
+```json
++            "acct": "UltimateMrrrp",
++            "url": "https://x.com/whatever",
++            "uri": "https://x.com/whatever",
+```
+
+![top line of the embed saying "Mrrrp.cat test (@UltimateMrrrp@x.com)"](02.png)
+
+So, if you have an `@` inside the `acct`, it doesn't do the append and you get a simple
+
+```json
++            "acct": "UltimateMrrrp@example.com",
++            "url": "https://mrrrp.cat/",
++            "uri": "https://mrrrp.cat/",
+```
+
+![top line of the embed saying "Mrrrp.cat test (@UltimateMrrrp@example.com)"](01.png)
+
+- **in a lot of the docs ive seen (check #references), they say that `og:title` is important, it isn't for activitypub. we removed and nothing changed**
 
 ### getting the payload in
 

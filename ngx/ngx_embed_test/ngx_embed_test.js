@@ -43,15 +43,12 @@ function post_123123(r) {
     const is_discord = (r.headersIn['User-Agent'] || '').includes('Discordbot')
     // false : opengraph
     // true  : opengraph - og:image + activitypub faking
-
-    /* <meta property="twitter:title" content="mrrrp.cat's awesome website">
-        <meta property="og:title" content="mrrrp.cat's awesome website"> */
     
     const h = html`
-        <link rel="canonical" href="https://x.com/Interior/status/463440424141459456">
+        <link rel="canonical" href="https://mrrrp.cat/">
         <meta property="og:type" content="website">
-        <meta property="og:url" content="https://x.com/Interior/status/463440424141459456">
-        <meta property="og:site_name" content="FxTwitter">
+        <meta property="og:url" content="https://mrrrp.cat/">
+        <meta property="og:site_name" content="mrrrp.cat">
         <meta property="og:locale" content="en_AU">
 
         ${!is_discord ? html`
@@ -59,7 +56,8 @@ function post_123123(r) {
             <meta name="twitter:card" content="summary_large_image">
             <meta name="twitter:image" content="https://mrrrp.cat/media/happy-cat.gif">` : ''}
 
-        
+        <meta property="twitter:title" content="mrrrp.cat's awesome website">
+        <meta property="og:title" content="mrrrp.cat's awesome website">
         <meta property="og:description" content="mrrrrrrrrrrrrpppp">
         <meta property="theme-color" content="#edc6b5"/>
 
@@ -83,25 +81,20 @@ NOTE(liam): if you ever want to add some metadata, try
 // /api/v1/statuses/123123
 /** @param {NginxHTTPRequest} r */
 function post_123123_status(r) {
-    // <b>  <i>  <code>  <pre>  <a href="...">  <blockquote>  <br>
     const post_content =
-`<b>b</b> <strong>strong</strong> <i>i</i> <em>em</em> <s>s</s> <u>u</u><br><br><code>code</code><br><pre>pre</pre><br><a href="https://example.com">a</a><br><br><blockquote>blockquote</blockquote><br><h1>h1</h1> <p>p</p> <ul><li>li</li></ul><br><span style="color:red">span+css</span><br>&amp;lt; entity &amp;gt;
+`<del>del</del> <strike>strike</strike><br><ol><li>ol-li</li><li>two</li></ol><br><ul><li>outer<ul><li>nested</li></ul></li></ul><br><div>div</div><br><small>small</small> <mark>mark</mark> <sub>sub</sub> <sup>sup</sup><br><span class="spoiler">spoiler-class</span><br><a href="https://example.com" title="hover">a-with-title</a><br><br><br><br>gap4<br><br><br>gap3`
 
-<br><br>
-
-▁▂▃▄▅▆▇█ <:hapcat3:1542789996443074570>`
-    
     const o = {
-        "id": "463440424141459456",
-        "url": "https://x.com/Interior/status/463440424141459456",
-        "uri": "https://x.com/Interior/status/463440424141459456",
-        "created_at": "2014-05-05T22:09:42.000Z",
+        "id": "123123",
+        "url": "https://mrrrp.cat/",
+        "uri": "https://mrrrp.cat/",
+        "created_at": "2026-08-24T00:28:43.000Z",
         "edited_at": null,
         "reblog": null,
         "in_reply_to_id": null,
         "in_reply_to_account_id": null,
         "language": "en",
-        "content": "Sunsets don't get much better than this one over <a href=\"https://x.com/GrandTetonNPS.\">@GrandTetonNPS.</a> <a href=\"https://x.com/hashtag/nature\">#nature</a> <a href=\"https://x.com/hashtag/sunset\">#sunset</a><br><br><b><a href=\"https://x.com/intent/tweet?in_reply_to=463440424141459456\">💬</a> 2.2K&ensp;<a href=\"https://x.com/intent/retweet?tweet_id=463440424141459456\">🔁</a> 3.0K&ensp;<a href=\"https://x.com/intent/like?tweet_id=463440424141459456\">❤️</a> 6.3K&ensp;</b>",
+        "content": post_content,
         "spoiler_text": "",
         "visibility": "public",
         "application": {
@@ -110,9 +103,9 @@ function post_123123_status(r) {
         },
         "media_attachments": [
             {
-                "id": "114163769487684704",
+                "id": "999999999999",
                 "type": "image",
-                "url": "https://pbs.twimg.com/media/Bm54nBCCYAACwBi.jpg?name=orig",
+                "url": "https://mrrrp.cat/media/frontpage!.png",
                 "preview_url": null,
                 "remote_url": null,
                 "preview_remote_url": null,
@@ -120,34 +113,34 @@ function post_123123_status(r) {
                 "description": null,
                 "meta": {
                     "original": {
-                        "width": 960,
-                        "height": 541,
-                        "size": "960x541",
-                        "aspect": 1.7744916820702403
+                        "width": 1149,
+                        "height": 838,
+                        "size": "1149x838",
+                        "aspect": 1.3711217183770883
                     }
                 }
             }
         ],
         "account": {
-            "id": "76348185",
-            "display_name": "U.S. Department of the Interior",
-            "username": "Interior",
-            "acct": "Interior",
-            "url": "https://x.com/Interior/status/463440424141459456",
-            "uri": "https://x.com/Interior/status/463440424141459456",
-            "created_at": "2009-09-22T14:36:29.000Z",
+            "id": "123123",
+            "display_name": "Mrrrp.cat test",
+            "username": "UltimateMrrrp",
+            "acct": "UltimateMrrrp",
+            "url": "https://mrrrp.cat/",
+            "uri": "https://mrrrp.cat/",
+            "created_at": "2026-08-24T00:28:43.000Z",
             "locked": false,
             "bot": false,
             "discoverable": true,
             "indexable": false,
             "group": false,
-            "avatar": "https://pbs.twimg.cnnom/profile_images/432081479/DOI_LOGO_200x200.jpg",
-            "avatar_static": "https://pbs.twimg.com/profile_images/432081479/DOI_LOGO_200x200.jpg",
+            "avatar": "https://mrrrp.cat/media/favicon-96x96.png",
+            "avatar_static": "https://mrrrp.cat/media/favicon-96x96.png",
             "header": "https://pbs.twimg.com/profile_banners/76348185/1784126031",
             "header_static": "https://pbs.twimg.com/profile_banners/76348185/1784126031",
-            "followers_count": 4659276,
-            "following_count": 109412,
-            "statuses_count": 29035,
+            "followers_count": 9999999,
+            "following_count": 9999999,
+            "statuses_count": 9999999,
             "hide_collections": false,
             "noindex": false,
             "emojis": [],
@@ -160,6 +153,7 @@ function post_123123_status(r) {
         "card": null,
         "poll": null
     }
+
     r.headersOut['Content-Type'] = 'application/json'
     r.return(200, JSON.stringify(o))
 }
