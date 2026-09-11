@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <title>refract</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <nav aria-label="File controls"><button type="button" id="clear" hidden>Clear</button><button type="button"
+            id="upload">Upload file</button><input type="file" id="file" accept=".lua,.txt,text/plain" hidden></nav>
+    <main>
+        <pre id="log" aria-label="Processing log" tabindex="0">refract 0.2e - all rights unreserved
+q: what's this?
+a: refract is devirtualizer for the synapse xen obfuscator.</pre>
+        <p id="status" role="status" hidden></p>
+        <section id="output" aria-labelledby="output-title" hidden>
+            <div class="output-head">
+                <div>
+                    <h1 id="output-title">Disassembly</h1><span id="filename"></span>
+                </div>
+                <div class="actions"><button type="button" id="save-listing">Save listing</button><button type="button"
+                        class="primary" id="download">Download .luac</button></div>
+            </div>
+            <pre id="listing" aria-label="Disassembly" tabindex="0"></pre>
+        </section>
+    </main>
+    <div id="drop-hint" hidden>drop it here buddy</div>
+    <script type="module" src="app.js"></script>
+</body>
+
+</html>

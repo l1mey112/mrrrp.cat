@@ -23,4 +23,9 @@ are working on and own! extending it seems fine to me and we get best of both wo
         <loc>https://mrrrp.cat/movie</loc>
         <mrrrp:authors>TODO mrrrp!</mrrrp:authors>
     </url>
+
+    <url>
+        <loc>https://mrrrp.cat/refract</loc>
+        <mrrrp:authors>mt</mrrrp:authors>
+    </url>
 </urlset>
