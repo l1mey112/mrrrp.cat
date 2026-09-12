@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="browser-based devirtualizer for luraph v14.8 (lua 5.1)">
+  <title>afterglow</title>
+  <base href="/afterglow/">
+  <link rel="icon" href="mark.svg" type="image/svg+xml">
+  <script>
+    try {
+      document.documentElement.dataset.theme = localStorage.getItem("afterglow:theme") || (matchMedia(
+        "(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    } catch {}
+  </script>
+  <link rel="stylesheet" href="style.min.css?v=10">
+</head>
+
+<body>
+  <svg class="svg-defs" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="i-download" viewBox="0 0 24 24">
+      <path d="M12 3v13m-5-5 5 5 5-5M4 16v5h16v-5" />
+    </symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24">
+      <rect x="8" y="8" width="12" height="13" rx="2" />
+      <path d="M16 8V3H3v13h5" />
+    </symbol>
+  </svg>
+  <a class="skip-link" href="#workspace">Skip to workspace</a>
+  <div class="app">
+    <header class="toolbar">
+      <div class="identity">
+        <h1>afterglow</h1>
+      </div>
+      <div class="toolbar-actions">
+        <input type="file" id="file" accept=".lua,.luau,.txt" hidden>
+        <button class="button" id="upload" disabled>upload</button>
+        <button class="button primary" id="start" disabled title="ctrl enter"><span
+            id="start-label">deobfuscate</span></button>
+      </div>
+    </header>
+    <main class="workspace" id="workspace" tabindex="-1" aria-label="Lua workspace">
+      <section class="source-pane" aria-label="Code editor">
+        <div class="pane-toolbar" id="output-toolbar" hidden>
+          <div class="tabs" id="tabs" role="tablist" aria-label="Code views">
+            <button class="tab on" id="tab-lua" data-view="lua" role="tab" aria-selected="true"
+              aria-controls="editor-wrap">src</button>
+            <button class="tab" id="tab-asm" data-view="asm" role="tab" aria-selected="false"
+              aria-controls="editor-wrap" aria-label="insns — devirtualized bytecode" title="Devirtualized bytecode"
+              tabindex="-1" disabled>insns</button>
+            <button class="tab" id="tab-pctrace" data-view="pctrace" role="tab" aria-selected="false"
+              aria-controls="editor-wrap" aria-label="viptrace — virtual instruction pointer trace"
+              title="Virtual instruction pointer trace" tabindex="-1" disabled>viptrace</button>
+          </div>
+          <div class="output-actions">
+            <button class="view-toggle" id="instructions-toggle" hidden aria-pressed="false"
+              title="Show the original instruction listing">Plain text</button>
+            <a class="icon-button" id="luac" download hidden aria-label="Download Lua bytecode"
+              title="Download .luac"><svg>
+                <use href="#i-download" /></svg></a>
+            <button class="icon-button" id="copy" hidden aria-label="Copy current output" title="Copy output"><svg>
+                <use href="#i-copy" /></svg></button>
+          </div>
+        </div>
+        <div id="editor-wrap" role="region" aria-label="Source editor">
+          <div id="editor"></div>
+          <div id="instructions" class="instructions" hidden tabindex="0" aria-label="Structured instruction listing">
+          </div>
+          <div class="placeholder" id="ph">-- Paste code or drop a .lua file here</div>
+          <div class="drop-hint" aria-hidden="true">Drop Lua file</div>
+        </div>
+        <div class="pane-footer"><span id="editor-info">0 lines</span></div>
+      </section>
+      <section class="console-pane" aria-labelledby="console-title">
+        <div class="pane-toolbar">
+          <h2 id="console-title">logs</h2>
+        </div>
+        <div class="run-activity" id="run-activity" hidden aria-live="polite">
+          <span class="activity-bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+          <span class="activity-phase" id="activity-phase">starting</span>
+          <time class="activity-time" id="activity-time">0:00</time>
+        </div>
+        <pre id="log" tabindex="0" aria-label="Afterglow console log"></pre>
+        <div class="pane-footer"><span class="runtime-status" id="runtime-status" data-state="loading"><span
+              class="status-dot"></span><span id="status" role="status">Loading engine…</span></span></div>
+      </section>
+    </main>
+    <footer class="statusbar"><span>afterglow is an experimental devirtualizer for luraph v14.8, targeting lua 5.1 (and soon) luau</span></footer>
+    
+  </div>
+  <noscript>
+    <p>Enable JavaScript to use afterglow.</p>
+  </noscript>
+  <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.52.2/min/vs/loader.js"></script>
+  <script src="instructions.min.js?v=4"></script>
+  <script src="app.min.js?v=18"></script>
+</body>
+
+</html>

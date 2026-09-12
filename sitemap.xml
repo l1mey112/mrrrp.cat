@@ -28,4 +28,9 @@ are working on and own! extending it seems fine to me and we get best of both wo
         <loc>https://mrrrp.cat/refract</loc>
         <mrrrp:authors>mt</mrrrp:authors>
     </url>
+
+    <url>
+        <loc>https://mrrrp.cat/afterglow</loc>
+        <mrrrp:authors>evan</mrrrp:authors>
+    </url>
 </urlset>
