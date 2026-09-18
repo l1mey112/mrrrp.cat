@@ -21,15 +21,8 @@ jobs:
 
       - name: check nginx config
         run: |
-          sudo -n podman --cgroup-manager=cgroupfs pull ghcr.io/l1mey112/mrrrp:latest
-          sudo -n podman --cgroup-manager=cgroupfs run --rm --network=host --user 0 \
-            -v "$PWD:/app:ro" \
-            ghcr.io/l1mey112/mrrrp:latest \
-            sh -c '
-              NJS=$(find /usr/lib /usr/lib64 -name ngx_http_js_module.so -print -quit)
-              test -n "$NJS"
-              nginx -t -p /app/ngx -c nginx.conf -g "load_module $NJS;"
-            '
+          nginx -t -p "$PWD/ngx" -c nginx.conf \
+            -g 'load_module /usr/lib/nginx/modules/ngx_http_js_module.so;'
 
   deploy:
     needs: check-nginx
