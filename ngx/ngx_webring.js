@@ -30,6 +30,7 @@ const webring = [
     'evan.lat',
     'blog.suwuako.com',
     'blueberrywren.dev',
+    'lemuel.dev'
     // your site here!
 ]
 
