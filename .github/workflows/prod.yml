@@ -14,7 +14,25 @@ env:
   NS: mrrrp-website
 
 jobs:
+  check-nginx:
+    runs-on: mrrrp-set
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: check nginx config
+        run: |
+          podman pull ghcr.io/l1mey112/mrrrp:latest
+          podman --cgroup-manager=cgroupfs run --rm --user 0 \
+            -v "$PWD:/app:ro" \
+            ghcr.io/l1mey112/mrrrp:latest \
+            sh -c '
+              NJS=$(find /usr/lib /usr/lib64 -name ngx_http_js_module.so -print -quit)
+              test -n "$NJS"
+              nginx -t -p /app/ngx -c nginx.conf -g "load_module $NJS;"
+            '
+
   deploy:
+    needs: check-nginx
     runs-on: mrrrp-set
     environment:
       name: production
