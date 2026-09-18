@@ -21,8 +21,8 @@ jobs:
 
       - name: check nginx config
         run: |
-          podman pull ghcr.io/l1mey112/mrrrp:latest
-          podman --cgroup-manager=cgroupfs run --rm --user 0 \
+          sudo -n podman --cgroup-manager=cgroupfs pull ghcr.io/l1mey112/mrrrp:latest
+          sudo -n podman --cgroup-manager=cgroupfs run --rm --network=host --user 0 \
             -v "$PWD:/app:ro" \
             ghcr.io/l1mey112/mrrrp:latest \
             sh -c '
